@@ -1,0 +1,67 @@
+{
+  "acai-dany": {
+    "name": "Açaí da Dany",
+    "description": "Sistema de cardápio direto para WhatsApp com interface intuitiva e responsiva",
+    "sourcePath": "../acai da dany/",
+    "demoPath": "./demos/acai-dany/",
+    "entryPoint": "index.html",
+    "preview": "assets/images/project-previews/acai-dany.svg",
+    "technologies": ["HTML", "CSS", "JavaScript"],
+    "features": ["Cardápio Digital", "Integração WhatsApp", "Responsive Design"],
+    "category": "E-commerce",
+    "status": "completed",
+    "lastUpdated": "2024-01-15"
+  },
+  "barbearia-raimundos": {
+    "name": "Barbearia Raimundos",
+    "description": "Sistema de agendamento para barbearia com interface moderna",
+    "sourcePath": "../Barbearia raimundos/",
+    "demoPath": "./demos/barbearia-raimundos/",
+    "entryPoint": "index.html",
+    "preview": "assets/images/project-previews/barbearia-raimundos.svg",
+    "technologies": ["HTML", "CSS", "JavaScript"],
+    "features": ["Agendamento Online", "Interface Moderna", "Gestão de Horários"],
+    "category": "Business",
+    "status": "completed",
+    "lastUpdated": "2024-01-12"
+  },
+  "financas-pessoais": {
+    "name": "Finanças Pessoais",
+    "description": "Sistema de controle financeiro com calculadora de empréstimos",
+    "sourcePath": "../financas pessoais/",
+    "demoPath": "./demos/financas-pessoais/",
+    "entryPoint": "index.html",
+    "preview": "assets/images/project-previews/financas-pessoais.svg",
+    "technologies": ["HTML", "CSS", "JavaScript"],
+    "features": ["Calculadora de Empréstimos", "Controle Financeiro", "Relatórios"],
+    "category": "Finance",
+    "status": "completed",
+    "lastUpdated": "2024-01-10"
+  },
+  "whatsapp-bot-ai": {
+    "name": "WhatsApp Bot AI",
+    "description": "Bot inteligente para WhatsApp com interface de chat interativa",
+    "sourcePath": "../Whatsapp bot. AI/",
+    "demoPath": "./demos/whatsapp-bot-ai/",
+    "entryPoint": "index.html",
+    "preview": "assets/images/project-previews/whatsapp-bot-ai.svg",
+    "technologies": ["HTML", "CSS", "JavaScript", "AI"],
+    "features": ["Chat Bot", "Inteligência Artificial", "Interface WhatsApp"],
+    "category": "AI/Automation",
+    "status": "completed",
+    "lastUpdated": "2024-01-08"
+  },
+  "landpage-divulga": {
+    "name": "Landing Page Divulga",
+    "description": "Landing page promocional com design moderno e conversão otimizada",
+    "sourcePath": "../landpage divulga/",
+    "demoPath": "./demos/landpage-divulga/",
+    "entryPoint": "index.html",
+    "preview": "assets/images/project-previews/landpage-divulga.svg",
+    "technologies": ["HTML", "CSS", "JavaScript"],
+    "features": ["Landing Page", "Design Moderno", "Conversão Otimizada"],
+    "category": "Marketing",
+    "status": "completed",
+    "lastUpdated": "2024-01-05"
+  }
+}

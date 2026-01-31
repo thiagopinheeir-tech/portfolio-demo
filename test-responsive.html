@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Test - Portfolio Demo</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/gallery.css">
+    <style>
+        .test-controls {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            z-index: 9999;
+            max-width: 300px;
+        }
+        .test-controls button {
+            margin: 5px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+        }
+        .test-controls button:hover {
+            background: #1d4ed8;
+        }
+        .viewport-info {
+            margin-bottom: 10px;
+            padding: 5px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-controls">
+        <div class="viewport-info">
+            <strong>Viewport:</strong> <span id="viewportSize"></span><br>
+            <strong>Breakpoint:</strong> <span id="currentBreakpoint"></span><br>
+            <strong>Grid Columns:</strong> <span id="gridInfo"></span>
+        </div>
+        <div>
+            <button onclick="setViewport(320, 568)">Mobile (320px)</button>
+            <button onclick="setViewport(768, 1024)">Tablet (768px)</button>
+            <button onclick="setViewport(1200, 800)">Desktop (1200px)</button>
+            <button onclick="resetViewport()">Reset</button>
+        </div>
+        <div style="margin-top: 10px;">
+            <button onclick="testHoverEffects()">Test Hover Effects</button>
+            <button onclick="testAccessibility()">Test Accessibility</button>
+        </div>
+    </div>
+
+    <div class="portfolio-container">
+        <header class="portfolio-header">
+            <h1>Projetos Realizados</h1>
+            <p>Demonstrações interativas dos sistemas desenvolvidos - Teste Responsivo</p>
+        </header>
+        
+        <div class="project-gallery" id="projectGallery">
+            <div class="project-card" data-demo="acai-dany" tabindex="0" role="button">
+                <div class="project-image">
+                    <img src="assets/images/project-previews/acai-dany.svg" alt="Preview do Açaí da Dany">
+                </div>
+                <div class="project-info">
+                    <h3>Açaí da Dany</h3>
+                    <p>Sistema de cardápio direto para WhatsApp com interface intuitiva e responsiva</p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <button class="demo-btn">
+                        <span>Ver Demo</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="project-card" data-demo="barbearia-raimundos" tabindex="0" role="button">
+                <div class="project-image">
+                    <img src="assets/images/project-previews/barbearia-raimundos.svg" alt="Preview da Barbearia Raimundos">
+                </div>
+                <div class="project-info">
+                    <h3>Barbearia Raimundos</h3>
+                    <p>Sistema de agendamento para barbearia com interface moderna</p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <button class="demo-btn">
+                        <span>Ver Demo</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="project-card" data-demo="financas-pessoais" tabindex="0" role="button">
+                <div class="project-image">
+                    <img src="assets/images/project-previews/financas-pessoais.svg" alt="Preview do Finanças Pessoais">
+                </div>
+                <div class="project-info">
+                    <h3>Finanças Pessoais</h3>
+                    <p>Sistema de controle financeiro com calculadora de empréstimos</p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <button class="demo-btn">
+                        <span>Ver Demo</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="project-card" data-demo="whatsapp-bot-ai" tabindex="0" role="button">
+                <div class="project-image">
+                    <img src="assets/images/project-previews/whatsapp-bot-ai.svg" alt="Preview do WhatsApp Bot AI">
+                </div>
+                <div class="project-info">
+                    <h3>WhatsApp Bot AI</h3>
+                    <p>Bot inteligente para WhatsApp com interface de chat interativa</p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">AI</span>
+                    </div>
+                    <button class="demo-btn">
+                        <span>Ver Demo</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="project-card" data-demo="landpage-divulga" tabindex="0" role="button">
+                <div class="project-image">
+                    <img src="assets/images/project-previews/landpage-divulga.svg" alt="Preview da Landing Page Divulga">
+                </div>
+                <div class="project-info">
+                    <h3>Landing Page Divulga</h3>
+                    <p>Landing page promocional com design moderno e conversão otimizada</p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <button class="demo-btn">
+                        <span>Ver Demo</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function updateViewportInfo() {
+            const viewportSize = document.getElementById('viewportSize');
+            const currentBreakpoint = document.getElementById('currentBreakpoint');
+            const gridInfo = document.getElementById('gridInfo');
+            const gallery = document.querySelector('.project-gallery');
+            
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            
+            viewportSize.textContent = `${width}x${height}`;
+            
+            // Determine breakpoint
+            let breakpoint = 'Desktop';
+            if (width <= 480) {
+                breakpoint = 'Mobile Small';
+            } else if (width <= 768) {
+                breakpoint = 'Mobile/Tablet';
+            }
+            currentBreakpoint.textContent = breakpoint;
+            
+            // Get grid info
+            const computedStyle = window.getComputedStyle(gallery);
+            const gridTemplateColumns = computedStyle.gridTemplateColumns;
+            const columnCount = gridTemplateColumns.split(' ').length;
+            gridInfo.textContent = `${columnCount} columns`;
+        }
+        
+        function setViewport(width, height) {
+            // This would work in a browser dev tools environment
+            console.log(`Setting viewport to ${width}x${height}`);
+            alert(`Please manually resize your browser to ${width}x${height} to test this breakpoint`);
+        }
+        
+        function resetViewport() {
+            console.log('Resetting viewport');
+            alert('Please reset your browser window to normal size');
+        }
+        
+        function testHoverEffects() {
+            const cards = document.querySelectorAll('.project-card');
+            let testResults = [];
+            
+            cards.forEach((card, index) => {
+                const cardRect = card.getBoundingClientRect();
+                const img = card.querySelector('.project-image img');
+                const btn = card.querySelector('.demo-btn');
+                
+                // Simulate hover
+                card.dispatchEvent(new MouseEvent('mouseenter'));
+                
+                // Check if transforms are applied
+                const cardStyle = window.getComputedStyle(card);
+                const imgStyle = window.getComputedStyle(img);
+                const btnStyle = window.getComputedStyle(btn);
+                
+                testResults.push({
+                    card: index + 1,
+                    cardTransform: cardStyle.transform,
+                    imgTransform: imgStyle.transform,
+                    cardShadow: cardStyle.boxShadow
+                });
+                
+                // Remove hover
+                card.dispatchEvent(new MouseEvent('mouseleave'));
+            });
+            
+            console.log('Hover Effects Test Results:', testResults);
+            alert('Hover effects tested! Check console for details.');
+        }
+        
+        function testAccessibility() {
+            const cards = document.querySelectorAll('.project-card');
+            let accessibilityResults = [];
+            
+            cards.forEach((card, index) => {
+                const hasTabindex = card.hasAttribute('tabindex');
+                const hasRole = card.hasAttribute('role');
+                const hasAriaLabel = card.hasAttribute('aria-label');
+                const img = card.querySelector('img');
+                const hasAltText = img && img.hasAttribute('alt');
+                
+                accessibilityResults.push({
+                    card: index + 1,
+                    tabindex: hasTabindex,
+                    role: hasRole,
+                    ariaLabel: hasAriaLabel,
+                    altText: hasAltText
+                });
+            });
+            
+            console.log('Accessibility Test Results:', accessibilityResults);
+            alert('Accessibility tested! Check console for details.');
+        }
+        
+        // Update info on load and resize
+        window.addEventListener('load', updateViewportInfo);
+        window.addEventListener('resize', updateViewportInfo);
+        
+        // Test keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.target.classList.contains('project-card')) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    console.log('Keyboard activation on:', e.target.dataset.demo);
+                    alert(`Keyboard activation detected for: ${e.target.dataset.demo}`);
+                }
+            }
+        });
+        
+        // Test hover effects on cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                console.log('Hover started on:', card.dataset.demo);
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                console.log('Hover ended on:', card.dataset.demo);
+            });
+        });
+    </script>
+</body>
+</html>

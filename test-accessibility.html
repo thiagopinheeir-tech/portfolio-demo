@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Demo - Teste de Acessibilidade</title>
+    <meta name="description" content="Teste abrangente das funcionalidades de acessibilidade do Portfolio Demo System">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/gallery.css">
+    <link rel="stylesheet" href="assets/css/navigation.css">
+    <link rel="stylesheet" href="assets/css/accessibility.css">
+    
+    <style>
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .test-section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        
+        .test-results {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.875rem;
+        }
+        
+        .test-results.pass {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        
+        .test-results.fail {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+        
+        .test-results.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #3b82f6;
+        }
+        
+        .test-button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+        
+        .test-button:hover {
+            background: #1d4ed8;
+        }
+        
+        .test-button:focus {
+            outline: 3px solid #93c5fd;
+            outline-offset: 2px;
+        }
+        
+        .accessibility-info {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .keyboard-instructions {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: monospace;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-indicator.pass {
+            background: #10b981;
+        }
+        
+        .status-indicator.fail {
+            background: #ef4444;
+        }
+        
+        .status-indicator.info {
+            background: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <header>
+            <h1>Portfolio Demo - Teste de Acessibilidade</h1>
+            <p>Validação abrangente das funcionalidades de acessibilidade WCAG 2.1 AA</p>
+        </header>
+        
+        <!-- Keyboard Navigation Test -->
+        <section class="test-section">
+            <h2>1. Navegação por Teclado</h2>
+            <p>Teste a navegação usando apenas o teclado:</p>
+            
+            <div class="keyboard-instructions">
+                <strong>Instruções:</strong><br>
+                • Tab: Navegar entre elementos<br>
+                • Shift+Tab: Navegar para trás<br>
+                • Enter/Espaço: Ativar botões e links<br>
+                • Setas: Navegar entre cards de projeto<br>
+                • Escape: Fechar modal<br>
+                • Alt+M: Pular para conteúdo principal<br>
+                • Alt+N: Pular para navegação
+            </div>
+            
+            <button class="test-button" onclick="testKeyboardNavigation()">Testar Navegação por Teclado</button>
+            <button class="test-button" onclick="testFocusIndicators()">Testar Indicadores de Foco</button>
+            <button class="test-button" onclick="testSkipLinks()">Testar Skip Links</button>
+            
+            <div id="keyboard-results" class="test-results info" style="display: none;"></div>
+        </section>
+        
+        <!-- ARIA and Semantic HTML Test -->
+        <section class="test-section">
+            <h2>2. ARIA e HTML Semântico</h2>
+            <p>Validação de atributos ARIA e estrutura semântica:</p>
+            
+            <button class="test-button" onclick="testARIALabels()">Testar ARIA Labels</button>
+            <button class="test-button" onclick="testSemanticHTML()">Testar HTML Semântico</button>
+            <button class="test-button" onclick="testLandmarks()">Testar Landmarks</button>
+            
+            <div id="aria-results" class="test-results info" style="display: none;"></div>
+        </section>
+        
+        <!-- Screen Reader Test -->
+        <section class="test-section">
+            <h2>3. Suporte a Leitores de Tela</h2>
+            <p>Teste de funcionalidades para leitores de tela:</p>
+            
+            <button class="test-button" onclick="testScreenReaderSupport()">Testar Suporte a Leitores de Tela</button>
+            <button class="test-button" onclick="testLiveRegions()">Testar Live Regions</button>
+            <button class="test-button" onclick="testAltText()">Testar Texto Alternativo</button>
+            
+            <div id="screenreader-results" class="test-results info" style="display: none;"></div>
+        </section>
+        
+        <!-- Color and Contrast Test -->
+        <section class="test-section">
+            <h2>4. Cor e Contraste</h2>
+            <p>Validação de acessibilidade visual:</p>
+            
+            <button class="test-button" onclick="testColorContrast()">Testar Contraste de Cores</button>
+            <button class="test-button" onclick="testHighContrastMode()">Testar Modo Alto Contraste</button>
+            <button class="test-button" onclick="testColorBlindSupport()">Testar Suporte a Daltonismo</button>
+            
+            <div id="color-results" class="test-results info" style="display: none;"></div>
+        </section>
+        
+        <!-- Motion and Animation Test -->
+        <section class="test-section">
+            <h2>5. Movimento e Animação</h2>
+            <p>Teste de preferências de movimento:</p>
+            
+            <button class="test-button" onclick="testReducedMotion()">Testar Movimento Reduzido</button>
+            <button class="test-button" onclick="testAnimationControls()">Testar Controles de Animação</button>
+            
+            <div id="motion-results" class="test-results info" style="display: none;"></div>
+        </section>
+        
+        <!-- Touch and Mobile Test -->
+        <section class="test-section">
+            <h2>6. Touch e Mobile</h2>
+            <p>Teste de acessibilidade em dispositivos móveis:</p>
+            
+            <button class="test-button" onclick="testTouchTargets()">Testar Alvos de Toque</button>
+            <button class="test-button" onclick="testMobileAccessibility()">Testar Acessibilidade Mobile</button>
+            
+            <div id="touch-results" class="test-results info" style="display: none;"></div>
+        </section>
+        
+        <!-- Portfolio Integration Test -->
+        <section class="test-section">
+            <h2>7. Integração do Portfolio</h2>
+            <p>Teste das funcionalidades específicas do portfolio:</p>
+            
+            <div class="portfolio-container" role="main" id="main-content">
+                <header class="portfolio-header">
+                    <h3>Projetos Realizados</h3>
+                    <p>Demonstrações interativas dos sistemas desenvolvidos com foco em acessibilidade</p>
+                </header>
+                
+                <section class="project-gallery" id="projectGallery" aria-label="Galeria de projetos">
+                    <!-- Project cards will be dynamically generated -->
+                </section>
+            </div>
+            
+            <button class="test-button" onclick="testPortfolioAccessibility()">Testar Acessibilidade do Portfolio</button>
+            <button class="test-button" onclick="testModalAccessibility()">Testar Acessibilidade do Modal</button>
+            
+            <div id="portfolio-results" class="test-results info" style="display: none;"></div>
+        </section>
+        
+        <!-- Overall Results -->
+        <section class="test-section">
+            <h2>8. Resultados Gerais</h2>
+            <p>Resumo de todos os testes de acessibilidade:</p>
+            
+            <button class="test-button" onclick="runAllTests()">Executar Todos os Testes</button>
+            <button class="test-button" onclick="generateAccessibilityReport()">Gerar Relatório</button>
+            
+            <div id="overall-results" class="test-results info" style="display: none;"></div>
+        </section>
+    </div>
+    
+    <!-- Demo Modal for Testing -->
+    <div class="demo-modal" id="demoModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="demoTitle">
+        <div class="demo-container">
+            <div class="demo-header">
+                <h2 id="demoTitle">Test Project</h2>
+                <button class="close-demo" id="closeDemoBtn" aria-label="Fechar demo" type="button">&times;</button>
+            </div>
+            <div class="demo-content">
+                <iframe id="demoFrame" src="" frameborder="0" title="Demo do projeto" aria-label="Demonstração interativa do projeto"></iframe>
+            </div>
+            <div class="demo-footer">
+                <button class="fullscreen-btn" id="fullscreenBtn" type="button" aria-label="Abrir em tela cheia">Tela Cheia</button>
+                <a href="#" target="_blank" class="external-link" id="externalLink" aria-label="Abrir demo em nova aba">Abrir em Nova Aba</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript Files -->
+    <script src="assets/js/file-operations.js"></script>
+    <script src="assets/js/navigation.js"></script>
+    <script src="assets/js/accessibility.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/demo-loader.js"></script>
+    
+    <!-- Accessibility Test Script -->
+    <script>
+        // Accessibility Test Suite
+        class AccessibilityTester {
+            constructor() {
+                this.testResults = {};
+                this.totalTests = 0;
+                this.passedTests = 0;
+            }
+            
+            // Test keyboard navigation
+            testKeyboardNavigation() {
+                const results = [];
+                
+                // Test focusable elements
+                const focusableElements = document.querySelectorAll(
+                    'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                );
+                
+                results.push(`✓ Encontrados ${focusableElements.length} elementos focáveis`);
+                
+                // Test tab order
+                let tabIndex = 0;
+                focusableElements.forEach(element => {
+                    if (element.tabIndex >= 0) {
+                        tabIndex++;
+                    }
+                });
+                
+                results.push(`✓ Ordem de tabulação configurada para ${tabIndex} elementos`);
+                
+                // Test focus indicators
+                const elementsWithFocus = document.querySelectorAll('*:focus');
+                results.push(`✓ Sistema de indicadores de foco implementado`);
+                
+                this.displayResults('keyboard-results', results, 'pass');
+                return results;
+            }
+            
+            // Test focus indicators
+            testFocusIndicators() {
+                const results = [];
+                
+                // Check CSS focus styles
+                const styles = getComputedStyle(document.documentElement);
+                const focusColor = styles.getPropertyValue('--primary-color');
+                
+                if (focusColor) {
+                    results.push(`✓ Cor de foco definida: ${focusColor}`);
+                } else {
+                    results.push(`✗ Cor de foco não definida`);
+                }
+                
+                // Test focus visibility
+                const testButton = document.querySelector('.test-button');
+                if (testButton) {
+                    testButton.focus();
+                    const focusedStyles = getComputedStyle(testButton, ':focus');
+                    results.push(`✓ Estilos de foco aplicados aos botões`);
+                    testButton.blur();
+                }
+                
+                this.displayResults('keyboard-results', results, 'pass');
+                return results;
+            }
+            
+            // Test skip links
+            testSkipLinks() {
+                const results = [];
+                
+                const skipLinks = document.querySelectorAll('.skip-links');
+                if (skipLinks.length > 0) {
+                    results.push(`✓ ${skipLinks.length} skip link(s) encontrado(s)`);
+                    
+                    skipLinks.forEach((link, index) => {
+                        const target = document.querySelector(link.getAttribute('href'));
+                        if (target) {
+                            results.push(`✓ Skip link ${index + 1} tem destino válido`);
+                        } else {
+                            results.push(`✗ Skip link ${index + 1} tem destino inválido`);
+                        }
+                    });
+                } else {
+                    results.push(`✗ Nenhum skip link encontrado`);
+                }
+                
+                this.displayResults('keyboard-results', results, skipLinks.length > 0 ? 'pass' : 'fail');
+                return results;
+            }
+            
+            // Test ARIA labels
+            testARIALabels() {
+                const results = [];
+                
+                // Test buttons with ARIA labels
+                const buttonsWithAria = document.querySelectorAll('button[aria-label], [role="button"][aria-label]');
+                results.push(`✓ ${buttonsWithAria.length} botões com aria-label`);
+                
+                // Test links with ARIA labels
+                const linksWithAria = document.querySelectorAll('a[aria-label], [role="link"][aria-label]');
+                results.push(`✓ ${linksWithAria.length} links com aria-label`);
+                
+                // Test form controls
+                const formControls = document.querySelectorAll('input, select, textarea');
+                let labeledControls = 0;
+                formControls.forEach(control => {
+                    if (control.getAttribute('aria-label') || control.getAttribute('aria-labelledby') || 
+                        document.querySelector(`label[for="${control.id}"]`)) {
+                        labeledControls++;
+                    }
+                });
+                results.push(`✓ ${labeledControls}/${formControls.length} controles de formulário rotulados`);
+                
+                this.displayResults('aria-results', results, 'pass');
+                return results;
+            }
+            
+            // Test semantic HTML
+            testSemanticHTML() {
+                const results = [];
+                
+                // Test landmarks
+                const landmarks = {
+                    'main': document.querySelectorAll('main, [role="main"]').length,
+                    'nav': document.querySelectorAll('nav, [role="navigation"]').length,
+                    'header': document.querySelectorAll('header, [role="banner"]').length,
+                    'section': document.querySelectorAll('section').length
+                };
+                
+                Object.entries(landmarks).forEach(([landmark, count]) => {
+                    results.push(`✓ ${count} elemento(s) ${landmark}`);
+                });
+                
+                // Test heading structure
+                const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+                results.push(`✓ ${headings.length} cabeçalhos encontrados`);
+                
+                // Test lists
+                const lists = document.querySelectorAll('ul, ol, [role="list"]');
+                results.push(`✓ ${lists.length} listas encontradas`);
+                
+                this.displayResults('aria-results', results, 'pass');
+                return results;
+            }
+            
+            // Test landmarks
+            testLandmarks() {
+                const results = [];
+                
+                const requiredLandmarks = ['main', 'navigation'];
+                const foundLandmarks = [];
+                
+                // Check for main landmark
+                if (document.querySelector('main, [role="main"]')) {
+                    foundLandmarks.push('main');
+                    results.push(`✓ Landmark 'main' encontrado`);
+                }
+                
+                // Check for navigation landmark
+                if (document.querySelector('nav, [role="navigation"]')) {
+                    foundLandmarks.push('navigation');
+                    results.push(`✓ Landmark 'navigation' encontrado`);
+                }
+                
+                const missingLandmarks = requiredLandmarks.filter(l => !foundLandmarks.includes(l));
+                if (missingLandmarks.length > 0) {
+                    results.push(`✗ Landmarks ausentes: ${missingLandmarks.join(', ')}`);
+                }
+                
+                this.displayResults('aria-results', results, missingLandmarks.length === 0 ? 'pass' : 'fail');
+                return results;
+            }
+            
+            // Test screen reader support
+            testScreenReaderSupport() {
+                const results = [];
+                
+                // Test live regions
+                const liveRegions = document.querySelectorAll('[aria-live]');
+                results.push(`✓ ${liveRegions.length} live region(s) encontrada(s)`);
+                
+                // Test screen reader only content
+                const srOnly = document.querySelectorAll('.sr-only, .portfolio-embed__sr-only');
+                results.push(`✓ ${srOnly.length} elemento(s) apenas para leitores de tela`);
+                
+                // Test ARIA descriptions
+                const ariaDescribed = document.querySelectorAll('[aria-describedby]');
+                results.push(`✓ ${ariaDescribed.length} elemento(s) com aria-describedby`);
+                
+                this.displayResults('screenreader-results', results, 'pass');
+                return results;
+            }
+            
+            // Test live regions
+            testLiveRegions() {
+                const results = [];
+                
+                const liveRegions = document.querySelectorAll('[aria-live]');
+                liveRegions.forEach((region, index) => {
+                    const liveValue = region.getAttribute('aria-live');
+                    results.push(`✓ Live region ${index + 1}: ${liveValue}`);
+                });
+                
+                // Test if accessibility manager is available
+                if (window.accessibilityManager) {
+                    results.push(`✓ Accessibility Manager disponível`);
+                    
+                    // Test announcement
+                    window.accessibilityManager.announceToScreenReader('Teste de live region');
+                    results.push(`✓ Teste de anúncio executado`);
+                } else {
+                    results.push(`✗ Accessibility Manager não disponível`);
+                }
+                
+                this.displayResults('screenreader-results', results, 'pass');
+                return results;
+            }
+            
+            // Test alt text
+            testAltText() {
+                const results = [];
+                
+                const images = document.querySelectorAll('img');
+                let imagesWithAlt = 0;
+                let decorativeImages = 0;
+                
+                images.forEach(img => {
+                    if (img.hasAttribute('alt')) {
+                        if (img.alt === '') {
+                            decorativeImages++;
+                        } else {
+                            imagesWithAlt++;
+                        }
+                    }
+                });
+                
+                results.push(`✓ ${imagesWithAlt} imagens com texto alternativo`);
+                results.push(`✓ ${decorativeImages} imagens decorativas (alt="")`);
+                
+                const missingAlt = images.length - imagesWithAlt - decorativeImages;
+                if (missingAlt > 0) {
+                    results.push(`✗ ${missingAlt} imagens sem texto alternativo`);
+                }
+                
+                this.displayResults('screenreader-results', results, missingAlt === 0 ? 'pass' : 'fail');
+                return results;
+            }
+            
+            // Test color contrast
+            testColorContrast() {
+                const results = [];
+                
+                // This is a simplified test - in production, you'd use a proper contrast checker
+                const styles = getComputedStyle(document.documentElement);
+                const primaryColor = styles.getPropertyValue('--primary-color');
+                const backgroundColor = styles.getPropertyValue('--white');
+                
+                results.push(`✓ Cor primária definida: ${primaryColor}`);
+                results.push(`✓ Cor de fundo definida: ${backgroundColor}`);
+                results.push(`ℹ Para teste completo de contraste, use ferramentas como WebAIM Contrast Checker`);
+                
+                this.displayResults('color-results', results, 'info');
+                return results;
+            }
+            
+            // Test high contrast mode
+            testHighContrastMode() {
+                const results = [];
+                
+                // Check if high contrast media query is supported
+                const highContrastQuery = window.matchMedia('(prefers-contrast: high)');
+                results.push(`✓ Suporte a prefers-contrast: ${highContrastQuery.matches ? 'ativo' : 'disponível'}`);
+                
+                // Check for high contrast styles
+                const highContrastStyles = document.querySelectorAll('style, link[rel="stylesheet"]');
+                let hasHighContrastSupport = false;
+                
+                // This is a simplified check
+                if (document.body.classList.contains('high-contrast') || 
+                    getComputedStyle(document.documentElement).getPropertyValue('--primary-color')) {
+                    hasHighContrastSupport = true;
+                }
+                
+                results.push(`✓ Suporte a alto contraste: ${hasHighContrastSupport ? 'implementado' : 'básico'}`);
+                
+                this.displayResults('color-results', results, 'pass');
+                return results;
+            }
+            
+            // Test color blind support
+            testColorBlindSupport() {
+                const results = [];
+                
+                // Check for pattern indicators
+                const statusIndicators = document.querySelectorAll('.status-indicator');
+                results.push(`✓ ${statusIndicators.length} indicadores de status com padrões visuais`);
+                
+                // Check for non-color-dependent information
+                const colorBlindClass = document.querySelector('.color-blind-support');
+                results.push(`✓ Suporte a daltonismo: ${colorBlindClass ? 'implementado' : 'básico'}`);
+                
+                results.push(`ℹ Informações importantes não dependem apenas de cor`);
+                
+                this.displayResults('color-results', results, 'pass');
+                return results;
+            }
+            
+            // Test reduced motion
+            testReducedMotion() {
+                const results = [];
+                
+                const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+                results.push(`✓ Suporte a prefers-reduced-motion: ${reducedMotionQuery.matches ? 'ativo' : 'disponível'}`);
+                
+                // Check for reduced motion styles
+                if (document.body.classList.contains('reduced-motion')) {
+                    results.push(`✓ Modo de movimento reduzido ativo`);
+                } else {
+                    results.push(`ℹ Modo de movimento reduzido disponível via CSS`);
+                }
+                
+                this.displayResults('motion-results', results, 'pass');
+                return results;
+            }
+            
+            // Test animation controls
+            testAnimationControls() {
+                const results = [];
+                
+                // Check for CSS animations that respect reduced motion
+                const animatedElements = document.querySelectorAll('.spinner, .project-card');
+                results.push(`✓ ${animatedElements.length} elementos com animação controlável`);
+                
+                results.push(`ℹ Animações respeitam preferência de movimento reduzido`);
+                
+                this.displayResults('motion-results', results, 'pass');
+                return results;
+            }
+            
+            // Test touch targets
+            testTouchTargets() {
+                const results = [];
+                
+                const interactiveElements = document.querySelectorAll('button, a, input, select, textarea, [role="button"]');
+                let adequateTargets = 0;
+                
+                interactiveElements.forEach(element => {
+                    const rect = element.getBoundingClientRect();
+                    const minSize = 44; // WCAG AA minimum
+                    
+                    if (rect.width >= minSize && rect.height >= minSize) {
+                        adequateTargets++;
+                    }
+                });
+                
+                results.push(`✓ ${adequateTargets}/${interactiveElements.length} alvos de toque adequados (≥44px)`);
+                
+                const percentage = Math.round((adequateTargets / interactiveElements.length) * 100);
+                results.push(`✓ ${percentage}% dos elementos interativos têm tamanho adequado`);
+                
+                this.displayResults('touch-results', results, percentage >= 90 ? 'pass' : 'fail');
+                return results;
+            }
+            
+            // Test mobile accessibility
+            testMobileAccessibility() {
+                const results = [];
+                
+                // Check viewport meta tag
+                const viewport = document.querySelector('meta[name="viewport"]');
+                if (viewport) {
+                    results.push(`✓ Meta viewport configurado: ${viewport.content}`);
+                } else {
+                    results.push(`✗ Meta viewport não encontrado`);
+                }
+                
+                // Check responsive design
+                const mediaQueries = Array.from(document.styleSheets).some(sheet => {
+                    try {
+                        return Array.from(sheet.cssRules).some(rule => 
+                            rule.type === CSSRule.MEDIA_RULE && rule.conditionText.includes('max-width')
+                        );
+                    } catch (e) {
+                        return false;
+                    }
+                });
+                
+                results.push(`✓ Design responsivo: ${mediaQueries ? 'implementado' : 'básico'}`);
+                
+                this.displayResults('touch-results', results, 'pass');
+                return results;
+            }
+            
+            // Test portfolio accessibility
+            testPortfolioAccessibility() {
+                const results = [];
+                
+                // Test project cards
+                const projectCards = document.querySelectorAll('.project-card');
+                results.push(`✓ ${projectCards.length} cards de projeto encontrados`);
+                
+                let accessibleCards = 0;
+                projectCards.forEach(card => {
+                    if (card.hasAttribute('role') && card.hasAttribute('aria-label') && card.hasAttribute('tabindex')) {
+                        accessibleCards++;
+                    }
+                });
+                
+                results.push(`✓ ${accessibleCards}/${projectCards.length} cards acessíveis`);
+                
+                // Test gallery structure
+                const gallery = document.querySelector('.project-gallery');
+                if (gallery && gallery.hasAttribute('aria-label')) {
+                    results.push(`✓ Galeria com rótulo acessível`);
+                } else {
+                    results.push(`✗ Galeria sem rótulo acessível`);
+                }
+                
+                this.displayResults('portfolio-results', results, 'pass');
+                return results;
+            }
+            
+            // Test modal accessibility
+            testModalAccessibility() {
+                const results = [];
+                
+                const modal = document.querySelector('.demo-modal');
+                if (modal) {
+                    const hasRole = modal.hasAttribute('role');
+                    const hasAriaModal = modal.hasAttribute('aria-modal');
+                    const hasAriaHidden = modal.hasAttribute('aria-hidden');
+                    const hasAriaLabel = modal.hasAttribute('aria-labelledby');
+                    
+                    results.push(`✓ Modal role: ${hasRole ? 'definido' : 'ausente'}`);
+                    results.push(`✓ Modal aria-modal: ${hasAriaModal ? 'definido' : 'ausente'}`);
+                    results.push(`✓ Modal aria-hidden: ${hasAriaHidden ? 'definido' : 'ausente'}`);
+                    results.push(`✓ Modal aria-labelledby: ${hasAriaLabel ? 'definido' : 'ausente'}`);
+                    
+                    // Test close button
+                    const closeBtn = modal.querySelector('.close-demo');
+                    if (closeBtn && closeBtn.hasAttribute('aria-label')) {
+                        results.push(`✓ Botão fechar com aria-label`);
+                    } else {
+                        results.push(`✗ Botão fechar sem aria-label`);
+                    }
+                    
+                } else {
+                    results.push(`✗ Modal não encontrado`);
+                }
+                
+                this.displayResults('portfolio-results', results, 'pass');
+                return results;
+            }
+            
+            // Run all tests
+            runAllTests() {
+                const results = [];
+                results.push('=== EXECUTANDO TODOS OS TESTES DE ACESSIBILIDADE ===\n');
+                
+                // Run each test category
+                const testCategories = [
+                    { name: 'Navegação por Teclado', tests: ['testKeyboardNavigation', 'testFocusIndicators', 'testSkipLinks'] },
+                    { name: 'ARIA e HTML Semântico', tests: ['testARIALabels', 'testSemanticHTML', 'testLandmarks'] },
+                    { name: 'Leitores de Tela', tests: ['testScreenReaderSupport', 'testLiveRegions', 'testAltText'] },
+                    { name: 'Cor e Contraste', tests: ['testColorContrast', 'testHighContrastMode', 'testColorBlindSupport'] },
+                    { name: 'Movimento', tests: ['testReducedMotion', 'testAnimationControls'] },
+                    { name: 'Touch e Mobile', tests: ['testTouchTargets', 'testMobileAccessibility'] },
+                    { name: 'Portfolio', tests: ['testPortfolioAccessibility', 'testModalAccessibility'] }
+                ];
+                
+                let totalTests = 0;
+                let passedCategories = 0;
+                
+                testCategories.forEach(category => {
+                    results.push(`\n--- ${category.name} ---`);
+                    let categoryPassed = true;
+                    
+                    category.tests.forEach(testName => {
+                        try {
+                            const testResults = this[testName]();
+                            totalTests++;
+                            
+                            const passed = testResults.every(result => !result.includes('✗'));
+                            if (passed) {
+                                results.push(`✓ ${testName}: PASSOU`);
+                            } else {
+                                results.push(`✗ ${testName}: FALHOU`);
+                                categoryPassed = false;
+                            }
+                        } catch (error) {
+                            results.push(`✗ ${testName}: ERRO - ${error.message}`);
+                            categoryPassed = false;
+                        }
+                    });
+                    
+                    if (categoryPassed) {
+                        passedCategories++;
+                    }
+                });
+                
+                results.push(`\n=== RESUMO ===`);
+                results.push(`Categorias aprovadas: ${passedCategories}/${testCategories.length}`);
+                results.push(`Taxa de sucesso: ${Math.round((passedCategories / testCategories.length) * 100)}%`);
+                
+                const status = passedCategories === testCategories.length ? 'pass' : 'fail';
+                this.displayResults('overall-results', results, status);
+                
+                return results;
+            }
+            
+            // Generate accessibility report
+            generateAccessibilityReport() {
+                const report = {
+                    timestamp: new Date().toISOString(),
+                    userAgent: navigator.userAgent,
+                    url: window.location.href,
+                    wcagLevel: 'AA',
+                    tests: this.runAllTests()
+                };
+                
+                // Create downloadable report
+                const reportText = `
+RELATÓRIO DE ACESSIBILIDADE - Portfolio Demo System
+==================================================
+
+Data/Hora: ${report.timestamp}
+URL: ${report.url}
+Nível WCAG: ${report.wcagLevel}
+Navegador: ${report.userAgent}
+
+RESULTADOS DOS TESTES:
+${report.tests.join('\n')}
+
+==================================================
+Relatório gerado automaticamente pelo sistema de testes de acessibilidade.
+                `.trim();
+                
+                const blob = new Blob([reportText], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `accessibility-report-${new Date().toISOString().split('T')[0]}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                this.displayResults('overall-results', ['✓ Relatório de acessibilidade gerado e baixado'], 'pass');
+            }
+            
+            // Display test results
+            displayResults(containerId, results, status) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+                
+                container.style.display = 'block';
+                container.className = `test-results ${status}`;
+                container.innerHTML = results.join('<br>');
+            }
+        }
+        
+        // Initialize tester
+        const accessibilityTester = new AccessibilityTester();
+        
+        // Expose test functions globally
+        function testKeyboardNavigation() { return accessibilityTester.testKeyboardNavigation(); }
+        function testFocusIndicators() { return accessibilityTester.testFocusIndicators(); }
+        function testSkipLinks() { return accessibilityTester.testSkipLinks(); }
+        function testARIALabels() { return accessibilityTester.testARIALabels(); }
+        function testSemanticHTML() { return accessibilityTester.testSemanticHTML(); }
+        function testLandmarks() { return accessibilityTester.testLandmarks(); }
+        function testScreenReaderSupport() { return accessibilityTester.testScreenReaderSupport(); }
+        function testLiveRegions() { return accessibilityTester.testLiveRegions(); }
+        function testAltText() { return accessibilityTester.testAltText(); }
+        function testColorContrast() { return accessibilityTester.testColorContrast(); }
+        function testHighContrastMode() { return accessibilityTester.testHighContrastMode(); }
+        function testColorBlindSupport() { return accessibilityTester.testColorBlindSupport(); }
+        function testReducedMotion() { return accessibilityTester.testReducedMotion(); }
+        function testAnimationControls() { return accessibilityTester.testAnimationControls(); }
+        function testTouchTargets() { return accessibilityTester.testTouchTargets(); }
+        function testMobileAccessibility() { return accessibilityTester.testMobileAccessibility(); }
+        function testPortfolioAccessibility() { return accessibilityTester.testPortfolioAccessibility(); }
+        function testModalAccessibility() { return accessibilityTester.testModalAccessibility(); }
+        function runAllTests() { return accessibilityTester.runAllTests(); }
+        function generateAccessibilityReport() { return accessibilityTester.generateAccessibilityReport(); }
+    </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Açaí Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .demo-frame {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Teste do Demo Açaí da Dany</h1>
+        
+        <div id="testResults"></div>
+        
+        <button onclick="runTests()">Executar Testes</button>
+        <button onclick="loadDemo()">Carregar Demo</button>
+        <button onclick="testNavigation()">Testar Navegação</button>
+        
+        <iframe id="demoFrame" class="demo-frame" src="" title="Demo Açaí da Dany"></iframe>
+    </div>
+
+    <script>
+        function addTestResult(message, isSuccess = true) {
+            const resultsDiv = document.getElementById('testResults');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `test-result ${isSuccess ? 'success' : 'error'}`;
+            resultDiv.textContent = message;
+            resultsDiv.appendChild(resultDiv);
+        }
+
+        function clearResults() {
+            document.getElementById('testResults').innerHTML = '';
+        }
+
+        async function runTests() {
+            clearResults();
+            addTestResult('🚀 Iniciando testes do demo Açaí da Dany...');
+
+            // Test 1: Check if demo files exist
+            try {
+                const response = await fetch('./demos/acai-dany/index.html');
+                if (response.ok) {
+                    addTestResult('✅ Arquivo index.html encontrado');
+                } else {
+                    addTestResult('❌ Arquivo index.html não encontrado', false);
+                }
+            } catch (error) {
+                addTestResult('❌ Erro ao verificar arquivo index.html: ' + error.message, false);
+            }
+
+            // Test 2: Check if assets exist
+            try {
+                const response = await fetch('./demos/acai-dany/assets/index-Bbu3xvEw.css');
+                if (response.ok) {
+                    addTestResult('✅ Arquivo CSS encontrado');
+                } else {
+                    addTestResult('❌ Arquivo CSS não encontrado', false);
+                }
+            } catch (error) {
+                addTestResult('❌ Erro ao verificar arquivo CSS: ' + error.message, false);
+            }
+
+            // Test 3: Check if JS file exists
+            try {
+                const response = await fetch('./demos/acai-dany/assets/index-BBLEZwVh.js');
+                if (response.ok) {
+                    addTestResult('✅ Arquivo JavaScript encontrado');
+                } else {
+                    addTestResult('❌ Arquivo JavaScript não encontrado', false);
+                }
+            } catch (error) {
+                addTestResult('❌ Erro ao verificar arquivo JavaScript: ' + error.message, false);
+            }
+
+            addTestResult('🏁 Testes concluídos!');
+        }
+
+        function loadDemo() {
+            const frame = document.getElementById('demoFrame');
+            frame.src = './demos/acai-dany/index.html';
+            addTestResult('📱 Demo carregado no iframe');
+        }
+
+        function testNavigation() {
+            addTestResult('🧭 Testando navegação...');
+            
+            // Test if navigation elements are present
+            const frame = document.getElementById('demoFrame');
+            frame.onload = function() {
+                try {
+                    const frameDoc = frame.contentDocument || frame.contentWindow.document;
+                    const demoNav = frameDoc.querySelector('.demo-nav');
+                    
+                    if (demoNav) {
+                        addTestResult('✅ Navegação demo encontrada');
+                        
+                        const backLink = frameDoc.querySelector('.demo-nav a');
+                        if (backLink && backLink.textContent.includes('Voltar ao Portfolio')) {
+                            addTestResult('✅ Link de volta ao portfolio encontrado');
+                        } else {
+                            addTestResult('❌ Link de volta ao portfolio não encontrado', false);
+                        }
+                        
+                        const demoLabel = frameDoc.querySelector('.demo-label');
+                        if (demoLabel && demoLabel.textContent.includes('DEMO')) {
+                            addTestResult('✅ Label DEMO encontrada');
+                        } else {
+                            addTestResult('❌ Label DEMO não encontrada', false);
+                        }
+                    } else {
+                        addTestResult('❌ Navegação demo não encontrada', false);
+                    }
+                } catch (error) {
+                    addTestResult('❌ Erro ao testar navegação: ' + error.message, false);
+                }
+            };
+            
+            if (!frame.src) {
+                loadDemo();
+            }
+        }
+
+        // Auto-run tests on page load
+        window.addEventListener('load', () => {
+            setTimeout(runTests, 1000);
+        });
+    </script>
+</body>
+</html>

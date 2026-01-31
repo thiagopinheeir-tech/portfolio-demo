@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Test - Portfolio Demo</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/gallery.css">
+</head>
+<body>
+    <div class="portfolio-container">
+        <h1>Modal Functionality Test</h1>
+        <button id="testModalBtn" class="btn btn-primary">Test Modal</button>
+        
+        <div id="testResults" style="margin-top: 20px; padding: 20px; background: #f0f0f0; border-radius: 8px;">
+            <h3>Test Results:</h3>
+            <ul id="resultsList"></ul>
+        </div>
+    </div>
+
+    <!-- Demo Modal (copied from main structure) -->
+    <div class="demo-modal" id="demoModal">
+        <div class="demo-container">
+            <div class="demo-header">
+                <h2 id="demoTitle">Test Project</h2>
+                <button class="close-demo" id="closeDemoBtn" aria-label="Fechar demo">&times;</button>
+            </div>
+            <div class="demo-content">
+                <iframe id="demoFrame" src="" frameborder="0" title="Demo do projeto"></iframe>
+            </div>
+            <div class="demo-footer">
+                <button class="fullscreen-btn" id="fullscreenBtn">Tela Cheia</button>
+                <a href="#" target="_blank" class="external-link" id="externalLink">Abrir em Nova Aba</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Test configuration
+        const testProject = {
+            name: "Test Project",
+            demoPath: "./",
+            entryPoint: "index.html"
+        };
+
+        // DOM elements
+        const modal = document.getElementById('demoModal');
+        const testBtn = document.getElementById('testModalBtn');
+        const closeBtn = document.getElementById('closeDemoBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const externalLink = document.getElementById('externalLink');
+        const demoTitle = document.getElementById('demoTitle');
+        const demoFrame = document.getElementById('demoFrame');
+        const resultsList = document.getElementById('resultsList');
+
+        // Test results
+        const results = [];
+
+        function addResult(test, passed, details = '') {
+            results.push({ test, passed, details });
+            const li = document.createElement('li');
+            li.style.color = passed ? 'green' : 'red';
+            li.textContent = `${test}: ${passed ? 'PASS' : 'FAIL'}${details ? ' - ' + details : ''}`;
+            resultsList.appendChild(li);
+        }
+
+        // Test modal structure
+        function testModalStructure() {
+            addResult('Modal element exists', !!modal);
+            addResult('Modal has demo-container', !!modal.querySelector('.demo-container'));
+            addResult('Modal has demo-header', !!modal.querySelector('.demo-header'));
+            addResult('Modal has demo-content', !!modal.querySelector('.demo-content'));
+            addResult('Modal has demo-footer', !!modal.querySelector('.demo-footer'));
+            addResult('Modal has iframe', !!demoFrame);
+            addResult('Modal has close button', !!closeBtn);
+            addResult('Modal has fullscreen button', !!fullscreenBtn);
+            addResult('Modal has external link', !!externalLink);
+        }
+
+        // Test modal opening
+        function testModalOpen() {
+            // Set up modal content
+            demoTitle.textContent = testProject.name;
+            externalLink.href = testProject.demoPath + testProject.entryPoint;
+            
+            // Show modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Test visibility
+            const isVisible = window.getComputedStyle(modal).visibility === 'visible';
+            const hasActiveClass = modal.classList.contains('active');
+            const bodyOverflowHidden = document.body.style.overflow === 'hidden';
+            
+            addResult('Modal becomes visible', isVisible);
+            addResult('Modal has active class', hasActiveClass);
+            addResult('Body overflow hidden', bodyOverflowHidden);
+            addResult('Demo title updated', demoTitle.textContent === testProject.name);
+            addResult('External link updated', externalLink.href.includes(testProject.entryPoint));
+        }
+
+        // Test modal closing
+        function testModalClose() {
+            // Close modal
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            demoFrame.src = '';
+            
+            // Test visibility
+            setTimeout(() => {
+                const isHidden = window.getComputedStyle(modal).visibility === 'hidden';
+                const noActiveClass = !modal.classList.contains('active');
+                const bodyOverflowReset = document.body.style.overflow === '';
+                const iframeSrcCleared = demoFrame.src === '' || demoFrame.src === window.location.href;
+                
+                addResult('Modal becomes hidden', isHidden);
+                addResult('Modal active class removed', noActiveClass);
+                addResult('Body overflow reset', bodyOverflowReset);
+                addResult('Iframe src cleared', iframeSrcCleared);
+            }, 350); // Wait for transition
+        }
+
+        // Test responsive sizing
+        function testResponsiveSizing() {
+            const container = modal.querySelector('.demo-container');
+            const computedStyle = window.getComputedStyle(container);
+            
+            addResult('Container has max-width', computedStyle.maxWidth !== 'none');
+            addResult('Container has max-height', computedStyle.maxHeight !== 'none');
+            addResult('Container is flex', computedStyle.display === 'flex');
+            addResult('Container flex-direction column', computedStyle.flexDirection === 'column');
+        }
+
+        // Test fullscreen functionality
+        function testFullscreenSupport() {
+            const supportsFullscreen = !!(document.fullscreenEnabled || 
+                                        document.webkitFullscreenEnabled || 
+                                        document.mozFullScreenEnabled ||
+                                        document.msFullscreenEnabled);
+            
+            addResult('Browser supports fullscreen', supportsFullscreen);
+            addResult('Fullscreen button exists', !!fullscreenBtn);
+            addResult('Fullscreen button clickable', fullscreenBtn.style.pointerEvents !== 'none');
+        }
+
+        // Run all tests
+        function runTests() {
+            resultsList.innerHTML = '';
+            results.length = 0;
+            
+            console.log('Running modal functionality tests...');
+            
+            testModalStructure();
+            testResponsiveSizing();
+            testFullscreenSupport();
+            testModalOpen();
+            
+            setTimeout(() => {
+                testModalClose();
+                
+                setTimeout(() => {
+                    const passedTests = results.filter(r => r.passed).length;
+                    const totalTests = results.length;
+                    
+                    const summary = document.createElement('li');
+                    summary.style.fontWeight = 'bold';
+                    summary.style.color = passedTests === totalTests ? 'green' : 'orange';
+                    summary.textContent = `Summary: ${passedTests}/${totalTests} tests passed`;
+                    resultsList.appendChild(summary);
+                    
+                    console.log(`Modal tests completed: ${passedTests}/${totalTests} passed`);
+                }, 400);
+            }, 100);
+        }
+
+        // Event listeners
+        testBtn.addEventListener('click', runTests);
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Test backdrop click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Test escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Auto-run tests on load
+        window.addEventListener('load', () => {
+            setTimeout(runTests, 500);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Integration Test</title>
+    
+    <!-- Load all integration components -->
+    <link rel="stylesheet" href="assets/css/embed.css">
+    
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem;
+            background: #f8fafc;
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        
+        .test-section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+        
+        .test-title {
+            color: #1f2937;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .test-description {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+        
+        .validation-results {
+            background: #f3f4f6;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.875rem;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .test-embed {
+            min-height: 200px;
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        
+        .manual-test-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+        
+        .manual-test-btn:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Portfolio Integration Test Suite</h1>
+        <p>Esta página testa todos os componentes de integração do Portfolio Demo System.</p>
+        
+        <!-- Validation Results -->
+        <div class="test-section">
+            <h2 class="test-title">🔍 Validation Results</h2>
+            <p class="test-description">Resultados automáticos da validação dos componentes:</p>
+            <div id="validation-output" class="validation-results">
+                Executando validações...
+            </div>
+        </div>
+        
+        <!-- Gallery Mode Test -->
+        <div class="test-section">
+            <h2 class="test-title">📱 Gallery Mode Test</h2>
+            <p class="test-description">Teste do modo gallery com auto-inicialização:</p>
+            <div class="test-embed" 
+                 data-portfolio-embed
+                 data-mode="gallery"
+                 data-theme="light"
+                 data-limit="3"
+                 data-base-url="./">
+            </div>
+        </div>
+        
+        <!-- Carousel Mode Test -->
+        <div class="test-section">
+            <h2 class="test-title">🎠 Carousel Mode Test</h2>
+            <p class="test-description">Teste do modo carousel:</p>
+            <div class="test-embed" 
+                 data-portfolio-embed
+                 data-mode="carousel"
+                 data-theme="light"
+                 data-base-url="./">
+            </div>
+        </div>
+        
+        <!-- Grid Mode Test -->
+        <div class="test-section">
+            <h2 class="test-title">🔲 Grid Mode Test</h2>
+            <p class="test-description">Teste do modo grid compacto:</p>
+            <div class="test-embed" 
+                 data-portfolio-embed
+                 data-mode="grid"
+                 data-theme="light"
+                 data-limit="4"
+                 data-base-url="./">
+            </div>
+        </div>
+        
+        <!-- List Mode Test -->
+        <div class="test-section">
+            <h2 class="test-title">📋 List Mode Test</h2>
+            <p class="test-description">Teste do modo lista:</p>
+            <div class="test-embed" 
+                 data-portfolio-embed
+                 data-mode="list"
+                 data-theme="light"
+                 data-limit="3"
+                 data-base-url="./">
+            </div>
+        </div>
+        
+        <!-- Manual JavaScript Test -->
+        <div class="test-section">
+            <h2 class="test-title">⚙️ Manual JavaScript Test</h2>
+            <p class="test-description">Teste de inicialização manual via JavaScript:</p>
+            <div id="manual-test-container" class="test-embed">
+                <p>Clique no botão abaixo para inicializar manualmente:</p>
+            </div>
+            <button class="manual-test-btn" onclick="initManualTest()">Inicializar Gallery</button>
+            <button class="manual-test-btn" onclick="initManualTest('carousel')">Inicializar Carousel</button>
+            <button class="manual-test-btn" onclick="initManualTest('grid')">Inicializar Grid</button>
+            <button class="manual-test-btn" onclick="initManualTest('list')">Inicializar List</button>
+            <button class="manual-test-btn" onclick="destroyManualTest()">Destruir</button>
+        </div>
+        
+        <!-- Minimal Embed Test -->
+        <div class="test-section">
+            <h2 class="test-title">📦 Minimal Embed Test</h2>
+            <p class="test-description">Teste da versão minimal (carregada separadamente):</p>
+            <div id="minimal-test-container" class="test-embed">
+                <p>A versão minimal será carregada dinamicamente...</p>
+            </div>
+            <button class="manual-test-btn" onclick="loadMinimalEmbed()">Carregar Minimal Embed</button>
+        </div>
+        
+        <!-- Performance Test -->
+        <div class="test-section">
+            <h2 class="test-title">⚡ Performance Test</h2>
+            <p class="test-description">Métricas de performance dos componentes:</p>
+            <div id="performance-output" class="validation-results">
+                Coletando métricas de performance...
+            </div>
+            <button class="manual-test-btn" onclick="showPerformanceMetrics()">Atualizar Métricas</button>
+        </div>
+    </div>
+    
+    <!-- Load scripts -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/embed.js"></script>
+    <script src="assets/js/performance.js"></script>
+    <script src="validate-integration.js"></script>
+    
+    <script>
+        let manualEmbed = null;
+        let minimalLoaded = false;
+        
+        // Capture console output for validation
+        const originalConsoleLog = console.log;
+        const validationOutput = document.getElementById('validation-output');
+        
+        console.log = function(...args) {
+            originalConsoleLog.apply(console, args);
+            if (validationOutput) {
+                validationOutput.textContent += args.join(' ') + '\n';
+                validationOutput.scrollTop = validationOutput.scrollHeight;
+            }
+        };
+        
+        // Manual test functions
+        function initManualTest(mode = 'gallery') {
+            const container = document.getElementById('manual-test-container');
+            
+            // Destroy existing instance
+            if (manualEmbed && manualEmbed.destroy) {
+                manualEmbed.destroy();
+            }
+            
+            // Create new instance
+            manualEmbed = new PortfolioEmbed({
+                container: container,
+                mode: mode,
+                theme: 'light',
+                baseUrl: './',
+                onLoad: (embed, metrics) => {
+                    console.log(`Manual test (${mode}) loaded in ${metrics.loadTime.toFixed(2)}ms`);
+                },
+                onProjectClick: (key, project, event) => {
+                    console.log(`Manual test: Project clicked - ${key}`);
+                    // Prevent default for testing
+                    event.preventDefault();
+                    alert(`Demo clicked: ${project.name}\n(Opening prevented for testing)`);
+                    return false;
+                }
+            });
+        }
+        
+        function destroyManualTest() {
+            if (manualEmbed && manualEmbed.destroy) {
+                manualEmbed.destroy();
+                manualEmbed = null;
+                document.getElementById('manual-test-container').innerHTML = '<p>Manual test destroyed. Click a button to reinitialize.</p>';
+                console.log('Manual test destroyed');
+            }
+        }
+        
+        function loadMinimalEmbed() {
+            if (minimalLoaded) {
+                console.log('Minimal embed already loaded');
+                return;
+            }
+            
+            const script = document.createElement('script');
+            script.src = 'assets/js/embed-minimal.js';
+            script.onload = () => {
+                minimalLoaded = true;
+                console.log('Minimal embed script loaded');
+                
+                // Initialize minimal embed
+                const container = document.getElementById('minimal-test-container');
+                container.innerHTML = '<div data-portfolio-minimal data-limit="3" data-base-url="./"></div>';
+                
+                // Trigger auto-initialization
+                const event = new Event('DOMContentLoaded');
+                document.dispatchEvent(event);
+                
+                console.log('Minimal embed initialized');
+            };
+            script.onerror = () => {
+                console.error('Failed to load minimal embed script');
+            };
+            document.head.appendChild(script);
+        }
+        
+        function showPerformanceMetrics() {
+            const performanceOutput = document.getElementById('performance-output');
+            
+            if (typeof performanceMonitor !== 'undefined' && performanceMonitor.metrics) {
+                const metrics = performanceMonitor.metrics;
+                const output = `
+Performance Metrics:
+==================
+Load Time: ${metrics.totalLoadTime ? metrics.totalLoadTime.toFixed(2) + 'ms' : 'Calculating...'}
+Resource Count: ${metrics.resourceCount}
+Error Count: ${metrics.errorCount}
+Memory Usage: ${metrics.memoryUsage ? (metrics.memoryUsage.used / 1024 / 1024).toFixed(2) + 'MB' : 'N/A'}
+LCP: ${metrics.largestContentfulPaint ? metrics.largestContentfulPaint.toFixed(2) + 'ms' : 'N/A'}
+FID: ${metrics.firstInputDelay ? metrics.firstInputDelay.toFixed(2) + 'ms' : 'N/A'}
+
+Navigation Timing:
+${metrics.navigationTiming ? JSON.stringify(metrics.navigationTiming, null, 2) : 'Not available'}
+
+Recommendations:
+${performanceMonitor.getPerformanceRecommendations ? 
+  performanceMonitor.getPerformanceRecommendations().map(r => `- ${r.message}: ${r.suggestion}`).join('\n') : 
+  'No recommendations available'}
+                `;
+                performanceOutput.textContent = output;
+            } else {
+                performanceOutput.textContent = 'Performance monitor not available or not initialized';
+            }
+        }
+        
+        // Initialize performance metrics display
+        setTimeout(() => {
+            showPerformanceMetrics();
+            
+            // Update every 5 seconds
+            setInterval(showPerformanceMetrics, 5000);
+        }, 2000);
+        
+        // Test project click events
+        document.addEventListener('click', (e) => {
+            const projectCard = e.target.closest('[data-project]');
+            if (projectCard && !e.defaultPrevented) {
+                const projectKey = projectCard.dataset.project;
+                console.log(`Global click handler: Project ${projectKey} clicked`);
+            }
+        });
+        
+        // Log when page is fully loaded
+        window.addEventListener('load', () => {
+            console.log('🎉 Test page fully loaded');
+            console.log('📊 Running integration validation...');
+        });
+    </script>
+</body>
+</html>

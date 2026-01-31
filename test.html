@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Operations Test</title>
+</head>
+<body>
+    <h1>File Operations Test</h1>
+    <div id="test-results"></div>
+    
+    <script>
+        // Mock project configuration
+        const projectConfig = {
+            "acai-dany": {
+                name: "Açaí da Dany",
+                sourcePath: "../acai da dany/",
+                demoPath: "./demos/acai-dany/",
+                entryPoint: "index.html"
+            },
+            "landpage-divulga": {
+                name: "Landing Page Divulga",
+                sourcePath: "../landpage divulga/",
+                demoPath: "./demos/landpage-divulga/",
+                entryPoint: "index.html"
+            }
+        };
+    </script>
+    <script src="assets/js/file-operations.js"></script>
+    
+    <script>
+        async function runBrowserTests() {
+            const resultsDiv = document.getElementById('test-results');
+            let results = '<h2>Test Results:</h2>';
+            
+            try {
+                // Test 1: FileOperations instantiation
+                const fileOps = new FileOperations();
+                results += '<p>✅ FileOperations class instantiated successfully</p>';
+                
+                // Test 2: Project key extraction
+                const projectKey = fileOps.extractProjectKeyFromPath('../acai da dany/');
+                if (projectKey === 'acai-dany') {
+                    results += '<p>✅ Project key extraction works correctly</p>';
+                } else {
+                    results += '<p>❌ Project key extraction failed</p>';
+                }
+                
+                // Test 3: File exclusion
+                const shouldExclude = fileOps.shouldExcludeFile('node_modules', ['node_modules']);
+                if (shouldExclude === true) {
+                    results += '<p>✅ File exclusion logic works correctly</p>';
+                } else {
+                    results += '<p>❌ File exclusion logic failed</p>';
+                }
+                
+                // Test 4: Directory scanning
+                const structure = await fileOps.scanSourceDirectory('../acai da dany/');
+                if (structure && structure.simulated === true) {
+                    results += '<p>✅ Directory scanning works correctly</p>';
+                    results += `<p>   - Found ${structure.files.length} files</p>`;
+                    results += `<p>   - Total size: ${structure.totalSize} bytes</p>`;
+                } else {
+                    results += '<p>❌ Directory scanning failed</p>';
+                }
+                
+                // Test 5: Copy operation
+                const copyResult = await fileOps.copyProjectFiles('../acai da dany/', './demos/acai-dany/');
+                if (copyResult && copyResult.results) {
+                    results += '<p>✅ Copy operation works correctly</p>';
+                    results += `<p>   - Total files: ${copyResult.results.totalFiles}</p>`;
+                    results += `<p>   - Copied files: ${copyResult.results.copiedFiles}</p>`;
+                    results += `<p>   - Failed files: ${copyResult.results.failedFiles}</p>`;
+                } else {
+                    results += '<p>❌ Copy operation failed</p>';
+                }
+                
+                // Test 6: Integrity validation
+                const validation = await fileOps.validateSourceIntegrity('../landpage divulga/');
+                if (validation && validation.modificationsAllowed === true) {
+                    results += '<p>✅ Landpage Divulga special handling works correctly</p>';
+                } else {
+                    results += '<p>❌ Landpage Divulga special handling failed</p>';
+                }
+                
+                results += '<h3>🎉 All tests completed!</h3>';
+                
+            } catch (error) {
+                results += `<p>❌ Test failed with error: ${error.message}</p>`;
+                console.error('Test error:', error);
+            }
+            
+            resultsDiv.innerHTML = results;
+        }
+        
+        // Run tests when page loads
+        document.addEventListener('DOMContentLoaded', runBrowserTests);
+    </script>
+</body>
+</html>

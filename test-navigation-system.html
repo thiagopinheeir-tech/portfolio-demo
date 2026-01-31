@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Navigation System - Portfolio Demo</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/navigation.css">
+    <style>
+        body {
+            padding: 80px 20px 20px;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f8fafc;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+        
+        .test-section h3 {
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+        
+        .test-button {
+            background: #2563eb;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.2s;
+        }
+        
+        .test-button:hover {
+            background: #1d4ed8;
+        }
+        
+        .test-result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .test-result.success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+        
+        .test-result.error {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+        
+        .demo-preview {
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            background: #f9fafb;
+        }
+    </style>
+</head>
+<body>
+    <!-- Test Navigation (simulating demo navigation) -->
+    <div class="demo-wrapper" data-demo="test-demo">
+        <!-- Navigation will be injected here -->
+    </div>
+
+    <div class="test-container">
+        <h1>🧪 Navigation System Test Suite</h1>
+        <p>Testing the enhanced navigation system for portfolio demos</p>
+
+        <!-- Test 1: Navigation Creation -->
+        <div class="test-section">
+            <h3>1. Navigation Creation Test</h3>
+            <p>Test if the navigation system can create enhanced navigation elements</p>
+            <button class="test-button" onclick="testNavigationCreation()">Test Navigation Creation</button>
+            <div id="navigationCreationResult" class="test-result" style="display: none;"></div>
+        </div>
+
+        <!-- Test 2: Breadcrumb System -->
+        <div class="test-section">
+            <h3>2. Breadcrumb System Test</h3>
+            <p>Test if breadcrumbs show correct navigation path</p>
+            <button class="test-button" onclick="testBreadcrumbs()">Test Breadcrumbs</button>
+            <div id="breadcrumbResult" class="test-result" style="display: none;"></div>
+        </div>
+
+        <!-- Test 3: Demo Menu -->
+        <div class="test-section">
+            <h3>3. Demo Menu Test</h3>
+            <p>Test if the demo menu shows all available demos</p>
+            <button class="test-button" onclick="testDemoMenu()">Test Demo Menu</button>
+            <div id="demoMenuResult" class="test-result" style="display: none;"></div>
+        </div>
+
+        <!-- Test 4: Smooth Transitions -->
+        <div class="test-section">
+            <h3>4. Smooth Transitions Test</h3>
+            <p>Test if transition overlay works correctly</p>
+            <button class="test-button" onclick="testTransitions()">Test Transitions</button>
+            <div id="transitionsResult" class="test-result" style="display: none;"></div>
+        </div>
+
+        <!-- Test 5: Responsive Design -->
+        <div class="test-section">
+            <h3>5. Responsive Design Test</h3>
+            <p>Test if navigation adapts to different screen sizes</p>
+            <button class="test-button" onclick="testResponsive()">Test Responsive</button>
+            <div id="responsiveResult" class="test-result" style="display: none;"></div>
+        </div>
+
+        <!-- Test 6: Accessibility -->
+        <div class="test-section">
+            <h3>6. Accessibility Test</h3>
+            <p>Test if navigation meets accessibility standards</p>
+            <button class="test-button" onclick="testAccessibility()">Test Accessibility</button>
+            <div id="accessibilityResult" class="test-result" style="display: none;"></div>
+        </div>
+
+        <!-- Navigation Preview -->
+        <div class="test-section">
+            <h3>7. Navigation Preview</h3>
+            <p>Preview of how the navigation looks in different demos</p>
+            <div class="demo-preview" id="navigationPreview">
+                <p><em>Navigation will be rendered here when tests are run</em></p>
+            </div>
+        </div>
+
+        <!-- Test Results Summary -->
+        <div class="test-section">
+            <h3>📊 Test Results Summary</h3>
+            <div id="testSummary">
+                <p>Run tests to see results summary</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include navigation system -->
+    <script src="assets/js/navigation.js"></script>
+    
+    <script>
+        let testResults = {
+            navigationCreation: null,
+            breadcrumbs: null,
+            demoMenu: null,
+            transitions: null,
+            responsive: null,
+            accessibility: null
+        };
+
+        function showResult(testName, success, message) {
+            const resultElement = document.getElementById(testName + 'Result');
+            resultElement.style.display = 'block';
+            resultElement.className = `test-result ${success ? 'success' : 'error'}`;
+            resultElement.textContent = message;
+            testResults[testName] = success;
+            updateTestSummary();
+        }
+
+        function testNavigationCreation() {
+            try {
+                // Test if navigation system exists
+                if (typeof demoNavigation === 'undefined') {
+                    throw new Error('demoNavigation not found');
+                }
+
+                // Test navigation creation
+                const nav = demoNavigation.createEnhancedNavigation('test-demo', 'Test Demo');
+                
+                if (nav && nav.classList.contains('demo-nav')) {
+                    showResult('navigationCreation', true, '✅ Navigation created successfully');
+                    
+                    // Show preview
+                    const preview = document.getElementById('navigationPreview');
+                    preview.innerHTML = nav.outerHTML;
+                } else {
+                    throw new Error('Navigation element not created properly');
+                }
+            } catch (error) {
+                showResult('navigationCreation', false, `❌ Error: ${error.message}`);
+            }
+        }
+
+        function testBreadcrumbs() {
+            try {
+                const breadcrumbs = document.querySelector('.demo-breadcrumbs');
+                if (!breadcrumbs) {
+                    throw new Error('Breadcrumbs not found');
+                }
+
+                const portfolioLink = breadcrumbs.querySelector('.breadcrumb-link');
+                const currentDemo = breadcrumbs.querySelector('.breadcrumb-current');
+
+                if (portfolioLink && currentDemo) {
+                    showResult('breadcrumbs', true, '✅ Breadcrumbs working correctly');
+                } else {
+                    throw new Error('Breadcrumb elements missing');
+                }
+            } catch (error) {
+                showResult('breadcrumbs', false, `❌ Error: ${error.message}`);
+            }
+        }
+
+        function testDemoMenu() {
+            try {
+                const menuToggle = document.querySelector('.demo-menu-toggle');
+                const menuDropdown = document.querySelector('.demo-menu-dropdown');
+                
+                if (!menuToggle || !menuDropdown) {
+                    throw new Error('Demo menu elements not found');
+                }
+
+                // Test menu toggle
+                menuToggle.click();
+                
+                setTimeout(() => {
+                    if (menuDropdown.classList.contains('active')) {
+                        const menuItems = menuDropdown.querySelectorAll('.demo-menu-item');
+                        if (menuItems.length > 0) {
+                            showResult('demoMenu', true, `✅ Demo menu working with ${menuItems.length} items`);
+                        } else {
+                            throw new Error('No menu items found');
+                        }
+                    } else {
+                        throw new Error('Menu did not open');
+                    }
+                    
+                    // Close menu
+                    menuToggle.click();
+                }, 100);
+            } catch (error) {
+                showResult('demoMenu', false, `❌ Error: ${error.message}`);
+            }
+        }
+
+        function testTransitions() {
+            try {
+                const overlay = document.getElementById('demoTransitionOverlay');
+                if (!overlay) {
+                    throw new Error('Transition overlay not found');
+                }
+
+                // Test showing transition
+                demoNavigation.showTransitionOverlay('Testing transitions...');
+                
+                setTimeout(() => {
+                    if (overlay.classList.contains('active')) {
+                        showResult('transitions', true, '✅ Transition overlay working');
+                        
+                        // Hide overlay
+                        demoNavigation.hideTransitionOverlay();
+                    } else {
+                        throw new Error('Transition overlay did not show');
+                    }
+                }, 100);
+            } catch (error) {
+                showResult('transitions', false, `❌ Error: ${error.message}`);
+            }
+        }
+
+        function testResponsive() {
+            try {
+                const nav = document.querySelector('.demo-nav');
+                if (!nav) {
+                    throw new Error('Navigation not found');
+                }
+
+                // Test responsive classes and styles
+                const computedStyle = window.getComputedStyle(nav);
+                const hasFlexDisplay = computedStyle.display === 'flex';
+                const hasResponsiveStyles = nav.classList.contains('demo-nav');
+
+                if (hasFlexDisplay && hasResponsiveStyles) {
+                    showResult('responsive', true, '✅ Responsive design implemented');
+                } else {
+                    throw new Error('Responsive styles not properly applied');
+                }
+            } catch (error) {
+                showResult('responsive', false, `❌ Error: ${error.message}`);
+            }
+        }
+
+        function testAccessibility() {
+            try {
+                const nav = document.querySelector('.demo-nav');
+                if (!nav) {
+                    throw new Error('Navigation not found');
+                }
+
+                let accessibilityScore = 0;
+                let totalChecks = 0;
+
+                // Check for ARIA labels
+                totalChecks++;
+                const menuToggle = nav.querySelector('.demo-menu-toggle');
+                if (menuToggle && menuToggle.getAttribute('aria-label')) {
+                    accessibilityScore++;
+                }
+
+                // Check for proper focus management
+                totalChecks++;
+                const focusableElements = nav.querySelectorAll('button, a, [tabindex]');
+                if (focusableElements.length > 0) {
+                    accessibilityScore++;
+                }
+
+                // Check for semantic HTML
+                totalChecks++;
+                if (nav.tagName.toLowerCase() === 'nav' || nav.querySelector('nav')) {
+                    accessibilityScore++;
+                }
+
+                const percentage = Math.round((accessibilityScore / totalChecks) * 100);
+                
+                if (percentage >= 80) {
+                    showResult('accessibility', true, `✅ Accessibility: ${percentage}% (${accessibilityScore}/${totalChecks})`);
+                } else {
+                    showResult('accessibility', false, `⚠️ Accessibility: ${percentage}% (${accessibilityScore}/${totalChecks}) - Needs improvement`);
+                }
+            } catch (error) {
+                showResult('accessibility', false, `❌ Error: ${error.message}`);
+            }
+        }
+
+        function updateTestSummary() {
+            const summary = document.getElementById('testSummary');
+            const results = Object.values(testResults);
+            const completed = results.filter(r => r !== null).length;
+            const passed = results.filter(r => r === true).length;
+            const failed = results.filter(r => r === false).length;
+
+            summary.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div style="text-align: center; padding: 15px; background: #f3f4f6; border-radius: 8px;">
+                        <div style="font-size: 24px; font-weight: bold; color: #374151;">${completed}</div>
+                        <div style="font-size: 14px; color: #6b7280;">Tests Run</div>
+                    </div>
+                    <div style="text-align: center; padding: 15px; background: #dcfce7; border-radius: 8px;">
+                        <div style="font-size: 24px; font-weight: bold; color: #166534;">${passed}</div>
+                        <div style="font-size: 14px; color: #166534;">Passed</div>
+                    </div>
+                    <div style="text-align: center; padding: 15px; background: #fef2f2; border-radius: 8px;">
+                        <div style="font-size: 24px; font-weight: bold; color: #dc2626;">${failed}</div>
+                        <div style="font-size: 14px; color: #dc2626;">Failed</div>
+                    </div>
+                    <div style="text-align: center; padding: 15px; background: #eff6ff; border-radius: 8px;">
+                        <div style="font-size: 24px; font-weight: bold; color: #2563eb;">${completed > 0 ? Math.round((passed / completed) * 100) : 0}%</div>
+                        <div style="font-size: 14px; color: #2563eb;">Success Rate</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Run all tests
+        function runAllTests() {
+            const tests = [
+                testNavigationCreation,
+                testBreadcrumbs,
+                testDemoMenu,
+                testTransitions,
+                testResponsive,
+                testAccessibility
+            ];
+
+            tests.forEach((test, index) => {
+                setTimeout(() => test(), index * 500);
+            });
+        }
+
+        // Add run all tests button
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.querySelector('.test-container');
+            const runAllButton = document.createElement('button');
+            runAllButton.textContent = '🚀 Run All Tests';
+            runAllButton.className = 'test-button';
+            runAllButton.style.cssText = 'background: #059669; font-size: 16px; padding: 12px 24px; margin: 20px 0;';
+            runAllButton.onclick = runAllTests;
+            
+            container.insertBefore(runAllButton, container.firstChild.nextSibling);
+        });
+    </script>
+</body>
+</html>

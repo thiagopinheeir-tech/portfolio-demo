@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State Reset System Test - Portfolio Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+        
+        .test-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .test-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .test-header h1 {
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        
+        .test-header p {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .test-card {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.2s ease;
+        }
+        
+        .test-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+        }
+        
+        .test-card h3 {
+            color: #1e293b;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .test-card p {
+            color: #64748b;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .test-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s ease;
+            width: 100%;
+        }
+        
+        .test-button:hover {
+            background: #2563eb;
+        }
+        
+        .test-button.secondary {
+            background: #6b7280;
+        }
+        
+        .test-button.secondary:hover {
+            background: #4b5563;
+        }
+        
+        .test-button.danger {
+            background: #ef4444;
+        }
+        
+        .test-button.danger:hover {
+            background: #dc2626;
+        }
+        
+        .test-results {
+            background: #f0f9ff;
+            border: 2px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .test-results h3 {
+            color: #0369a1;
+            margin-bottom: 15px;
+        }
+        
+        .test-log {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-success {
+            background: #10b981;
+        }
+        
+        .status-warning {
+            background: #f59e0b;
+        }
+        
+        .status-error {
+            background: #ef4444;
+        }
+        
+        .demo-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .demo-link {
+            display: block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+        }
+        
+        .demo-link:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>🔄 State Reset System Test</h1>
+            <p>Teste e validação do sistema de reset de estado dos demos</p>
+        </div>
+        
+        <div class="test-grid">
+            <div class="test-card">
+                <h3>
+                    <span class="status-indicator status-success"></span>
+                    Sistema de Reset
+                </h3>
+                <p>Testa o funcionamento básico do sistema de reset de estado</p>
+                <button class="test-button" onclick="testStateResetSystem()">
+                    Testar Sistema
+                </button>
+            </div>
+            
+            <div class="test-card">
+                <h3>
+                    <span class="status-indicator status-warning"></span>
+                    Limpeza de Storage
+                </h3>
+                <p>Verifica se localStorage, sessionStorage e cookies são limpos</p>
+                <button class="test-button" onclick="testStorageClear()">
+                    Testar Limpeza
+                </button>
+            </div>
+            
+            <div class="test-card">
+                <h3>
+                    <span class="status-indicator status-success"></span>
+                    Reset de Formulários
+                </h3>
+                <p>Testa o reset automático de todos os formulários da página</p>
+                <button class="test-button" onclick="testFormReset()">
+                    Testar Formulários
+                </button>
+            </div>
+            
+            <div class="test-card">
+                <h3>
+                    <span class="status-indicator status-warning"></span>
+                    Dados Persistentes
+                </h3>
+                <p>Verifica se existem dados persistindo entre sessões</p>
+                <button class="test-button secondary" onclick="checkPersistentData()">
+                    Verificar Dados
+                </button>
+            </div>
+            
+            <div class="test-card">
+                <h3>
+                    <span class="status-indicator status-error"></span>
+                    Reset Forçado
+                </h3>
+                <p>Executa um reset completo de todos os demos</p>
+                <button class="test-button danger" onclick="forceFullReset()">
+                    Reset Forçado
+                </button>
+            </div>
+            
+            <div class="test-card">
+                <h3>
+                    <span class="status-indicator status-success"></span>
+                    Estatísticas
+                </h3>
+                <p>Mostra estatísticas do sistema de reset</p>
+                <button class="test-button secondary" onclick="showResetStats()">
+                    Ver Estatísticas
+                </button>
+            </div>
+        </div>
+        
+        <div class="test-results" id="testResults" style="display: none;">
+            <h3>📊 Resultados dos Testes</h3>
+            <div class="test-log" id="testLog"></div>
+        </div>
+        
+        <div class="demo-links">
+            <a href="./demos/acai-dany/index.html" class="demo-link">
+                🍇 Açaí da Dany
+            </a>
+            <a href="./demos/barbearia-raimundos/index.html" class="demo-link">
+                ✂️ Barbearia Raimundos
+            </a>
+            <a href="./demos/financas-pessoais/index.html" class="demo-link">
+                💰 Finanças Pessoais
+            </a>
+            <a href="./demos/whatsapp-bot-ai/index.html" class="demo-link">
+                🤖 WhatsApp Bot AI
+            </a>
+            <a href="./demos/landpage-divulga/index.html" class="demo-link">
+                🚀 TTECH Landing
+            </a>
+        </div>
+    </div>
+
+    <!-- Test Form for Form Reset Testing -->
+    <div class="test-container" style="display: none;" id="testFormContainer">
+        <h3>Formulário de Teste</h3>
+        <form id="testForm">
+            <input type="text" name="name" placeholder="Nome" value="Teste">
+            <input type="email" name="email" placeholder="Email" value="teste@email.com">
+            <select name="option">
+                <option value="">Selecione</option>
+                <option value="1" selected>Opção 1</option>
+                <option value="2">Opção 2</option>
+            </select>
+            <textarea name="message" placeholder="Mensagem">Mensagem de teste</textarea>
+            <input type="checkbox" name="agree" checked> Concordo
+            <input type="radio" name="type" value="a" checked> Tipo A
+            <input type="radio" name="type" value="b"> Tipo B
+        </form>
+    </div>
+
+    <!-- State Reset System -->
+    <script src="./state-reset-system.js"></script>
+    
+    <script>
+        let testLog = [];
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${type.toUpperCase()}: ${message}`;
+            testLog.push(logEntry);
+            
+            const logElement = document.getElementById('testLog');
+            if (logElement) {
+                logElement.textContent = testLog.join('\n');
+                logElement.scrollTop = logElement.scrollHeight;
+            }
+            
+            console.log(logEntry);
+        }
+        
+        function showResults() {
+            document.getElementById('testResults').style.display = 'block';
+        }
+        
+        function testStateResetSystem() {
+            log('Iniciando teste do sistema de reset...', 'info');
+            showResults();
+            
+            if (window.stateResetSystem) {
+                log('✅ Sistema de reset encontrado', 'success');
+                
+                const stats = window.stateResetSystem.getResetStats();
+                log(`📊 Demos registrados: ${Object.keys(stats).length}`, 'info');
+                
+                Object.keys(stats).forEach(demo => {
+                    log(`  - ${demo}: ${stats[demo].resetCount} resets`, 'info');
+                });
+                
+                log('🔄 Executando reset completo...', 'info');
+                window.stateResetSystem.performFullReset();
+                log('✅ Reset completo executado com sucesso', 'success');
+            } else {
+                log('❌ Sistema de reset não encontrado', 'error');
+            }
+        }
+        
+        function testStorageClear() {
+            log('Testando limpeza de storage...', 'info');
+            showResults();
+            
+            // Add test data to storage
+            try {
+                localStorage.setItem('test-demo-data', 'test-value');
+                sessionStorage.setItem('test-session-data', 'test-value');
+                document.cookie = 'test-demo-cookie=test-value';
+                
+                log('📝 Dados de teste adicionados ao storage', 'info');
+                
+                if (window.stateResetSystem) {
+                    window.stateResetSystem.clearAllStorage();
+                    
+                    // Check if data was cleared
+                    const localData = localStorage.getItem('test-demo-data');
+                    const sessionData = sessionStorage.getItem('test-session-data');
+                    const hasCookie = document.cookie.includes('test-demo-cookie');
+                    
+                    if (!localData && !sessionData && !hasCookie) {
+                        log('✅ Storage limpo com sucesso', 'success');
+                    } else {
+                        log('⚠️ Alguns dados podem não ter sido limpos', 'warning');
+                    }
+                } else {
+                    log('❌ Sistema de reset não disponível', 'error');
+                }
+            } catch (error) {
+                log(`❌ Erro no teste de storage: ${error.message}`, 'error');
+            }
+        }
+        
+        function testFormReset() {
+            log('Testando reset de formulários...', 'info');
+            showResults();
+            
+            // Show test form
+            const formContainer = document.getElementById('testFormContainer');
+            formContainer.style.display = 'block';
+            
+            // Modify form values
+            const form = document.getElementById('testForm');
+            const nameInput = form.querySelector('input[name="name"]');
+            const emailInput = form.querySelector('input[name="email"]');
+            const select = form.querySelector('select[name="option"]');
+            const textarea = form.querySelector('textarea[name="message"]');
+            
+            nameInput.value = 'Valor Modificado';
+            emailInput.value = 'modificado@email.com';
+            select.selectedIndex = 2;
+            textarea.value = 'Mensagem modificada';
+            
+            log('📝 Formulário modificado com novos valores', 'info');
+            
+            if (window.stateResetSystem) {
+                window.stateResetSystem.resetAllForms();
+                
+                // Check if form was reset
+                if (nameInput.value === 'Teste' && 
+                    emailInput.value === 'teste@email.com' &&
+                    select.selectedIndex === 1 &&
+                    textarea.value === 'Mensagem de teste') {
+                    log('✅ Formulários resetados com sucesso', 'success');
+                } else {
+                    log('⚠️ Reset de formulários pode estar incompleto', 'warning');
+                }
+            } else {
+                log('❌ Sistema de reset não disponível', 'error');
+            }
+            
+            // Hide test form after 3 seconds
+            setTimeout(() => {
+                formContainer.style.display = 'none';
+            }, 3000);
+        }
+        
+        function checkPersistentData() {
+            log('Verificando dados persistentes...', 'info');
+            showResults();
+            
+            if (window.stateResetSystem) {
+                const hasPersistentData = window.stateResetSystem.checkForPersistentData();
+                
+                if (hasPersistentData) {
+                    log('⚠️ Dados persistentes detectados', 'warning');
+                    log('🧹 Executando limpeza automática...', 'info');
+                    window.stateResetSystem.clearAllStorage();
+                } else {
+                    log('✅ Nenhum dado persistente encontrado', 'success');
+                }
+                
+                // Check storage sizes
+                const localStorageSize = localStorage.length;
+                const sessionStorageSize = sessionStorage.length;
+                
+                log(`📊 localStorage: ${localStorageSize} itens`, 'info');
+                log(`📊 sessionStorage: ${sessionStorageSize} itens`, 'info');
+            } else {
+                log('❌ Sistema de reset não disponível', 'error');
+            }
+        }
+        
+        function forceFullReset() {
+            log('Executando reset forçado completo...', 'warning');
+            showResults();
+            
+            if (window.stateResetSystem) {
+                window.stateResetSystem.forceReset();
+                log('🚨 Reset forçado executado', 'success');
+                log('🔄 Todos os demos foram resetados', 'info');
+                log('🧹 Todo storage foi limpo', 'info');
+                log('📝 Todos os formulários foram resetados', 'info');
+            } else {
+                log('❌ Sistema de reset não disponível', 'error');
+            }
+        }
+        
+        function showResetStats() {
+            log('Coletando estatísticas do sistema...', 'info');
+            showResults();
+            
+            if (window.stateResetSystem) {
+                const stats = window.stateResetSystem.getResetStats();
+                
+                log('📊 ESTATÍSTICAS DO SISTEMA DE RESET', 'info');
+                log('=====================================', 'info');
+                
+                Object.entries(stats).forEach(([demo, data]) => {
+                    log(`🎯 ${demo}:`, 'info');
+                    log(`   Último reset: ${data.lastReset}`, 'info');
+                    log(`   Total de resets: ${data.resetCount}`, 'info');
+                });
+                
+                log('=====================================', 'info');
+                log(`✅ Total de demos registrados: ${Object.keys(stats).length}`, 'success');
+            } else {
+                log('❌ Sistema de reset não disponível', 'error');
+            }
+        }
+        
+        // Initialize test page
+        document.addEventListener('DOMContentLoaded', () => {
+            log('🔄 Página de teste carregada', 'info');
+            
+            if (window.stateResetSystem) {
+                log('✅ Sistema de reset inicializado', 'success');
+            } else {
+                log('⚠️ Aguardando inicialização do sistema...', 'warning');
+                
+                // Wait for system to initialize
+                setTimeout(() => {
+                    if (window.stateResetSystem) {
+                        log('✅ Sistema de reset inicializado (atrasado)', 'success');
+                    } else {
+                        log('❌ Sistema de reset falhou ao inicializar', 'error');
+                    }
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>

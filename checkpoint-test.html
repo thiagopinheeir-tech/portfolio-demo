@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkpoint Test - Portfolio Demo</title>
+    <meta name="description" content="Comprehensive validation of basic structure and responsiveness">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/gallery.css">
+    
+    <style>
+        .test-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            color: white;
+            z-index: 10000;
+            padding: 20px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .test-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10001;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .test-controls button {
+            margin: 5px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .test-controls button:hover {
+            background: #1d4ed8;
+        }
+        
+        .test-controls button.secondary {
+            background: #6b7280;
+        }
+        
+        .test-controls button.secondary:hover {
+            background: #4b5563;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .test-status {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            z-index: 10001;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #3b82f6);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Test Controls -->
+    <div class="test-controls">
+        <div style="margin-bottom: 10px; font-weight: bold;">Checkpoint Test Controls</div>
+        <button onclick="runCheckpointTest()">Run Checkpoint Test</button>
+        <button onclick="toggleTestOverlay()" class="secondary">Toggle Test View</button>
+        <button onclick="exportResults()" class="secondary">Export Results</button>
+        <button onclick="clearResults()" class="secondary">Clear</button>
+    </div>
+
+    <!-- Test Status -->
+    <div class="test-status" id="testStatus">
+        <div><strong>Checkpoint Test Status:</strong> Ready to run</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div id="statusText">Click "Run Checkpoint Test" to begin validation</div>
+    </div>
+
+    <!-- Test Overlay -->
+    <div class="test-overlay hidden" id="testOverlay">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h2>🧪 CHECKPOINT TEST - BASIC STRUCTURE AND RESPONSIVENESS</h2>
+            <p>Task 4: Comprehensive validation of current implementation</p>
+        </div>
+        <div id="testOutput">
+            <div style="color: #10b981;">Ready to run checkpoint validation...</div>
+            <div style="color: #6b7280; margin-top: 10px;">
+                This test will validate:
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li>✓ Basic HTML structure and required files</li>
+                    <li>✓ CSS Grid implementation and responsiveness</li>
+                    <li>✓ Project configuration and card generation</li>
+                    <li>✓ File operations system functionality</li>
+                    <li>✓ Accessibility features and compliance</li>
+                    <li>✓ Modal system and error handling</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Container (Main Content) -->
+    <div class="portfolio-container">
+        <!-- Header Section -->
+        <header class="portfolio-header">
+            <h1>Projetos Realizados</h1>
+            <p>Demonstrações interativas dos sistemas desenvolvidos - Checkpoint Test</p>
+        </header>
+        
+        <!-- Project Gallery -->
+        <div class="project-gallery" id="projectGallery">
+            <!-- Project cards will be dynamically generated -->
+        </div>
+        
+        <!-- Loading State -->
+        <div class="loading-state hidden" id="loadingState">
+            <div class="spinner"></div>
+            <p>Carregando projetos...</p>
+        </div>
+    </div>
+    
+    <!-- Demo Modal -->
+    <div class="demo-modal" id="demoModal" role="dialog" aria-modal="true">
+        <div class="demo-container">
+            <div class="demo-header">
+                <h2 id="demoTitle">Project Name</h2>
+                <button class="close-demo" id="closeDemoBtn" aria-label="Fechar demo">&times;</button>
+            </div>
+            <div class="demo-content">
+                <iframe id="demoFrame" src="" frameborder="0" title="Demo do projeto"></iframe>
+            </div>
+            <div class="demo-footer">
+                <button class="fullscreen-btn" id="fullscreenBtn">Tela Cheia</button>
+                <a href="#" target="_blank" class="external-link" id="externalLink">Abrir em Nova Aba</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript Files -->
+    <script src="assets/js/file-operations.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/demo-loader.js"></script>
+    <script src="checkpoint-test.js"></script>
+    
+    <script>
+        // Test control functions
+        let testRunning = false;
+        let testResults = null;
+        
+        function runCheckpointTest() {
+            if (testRunning) {
+                updateStatus('Test already running...', 'warning');
+                return;
+            }
+            
+            testRunning = true;
+            updateStatus('Starting checkpoint test...', 'info');
+            updateProgress(0);
+            
+            // Clear previous output
+            const testOutput = document.getElementById('testOutput');
+            testOutput.innerHTML = '<div style="color: #10b981;">🚀 Starting Checkpoint Validation...</div>';
+            
+            // Show test overlay
+            document.getElementById('testOverlay').classList.remove('hidden');
+            
+            // Redirect console.log to test output
+            const originalLog = console.log;
+            console.log = function(...args) {
+                originalLog.apply(console, args);
+                const message = args.join(' ');
+                appendTestOutput(message);
+                
+                // Update progress based on test messages
+                if (message.includes('✅') || message.includes('❌')) {
+                    const currentProgress = parseInt(document.getElementById('progressFill').style.width) || 0;
+                    updateProgress(Math.min(currentProgress + 5, 95));
+                }
+            };
+            
+            // Run the checkpoint test
+            setTimeout(() => {
+                try {
+                    const validator = new CheckpointValidator();
+                    validator.runAllTests().then(() => {
+                        testRunning = false;
+                        testResults = window.checkpointResults;
+                        updateProgress(100);
+                        
+                        if (testResults && testResults.passed) {
+                            updateStatus(`✅ Checkpoint PASSED (${testResults.percentage}%)`, 'success');
+                        } else {
+                            updateStatus(`⚠️ Checkpoint needs attention (${testResults?.percentage || 0}%)`, 'warning');
+                        }
+                        
+                        // Restore console.log
+                        console.log = originalLog;
+                    });
+                } catch (error) {
+                    testRunning = false;
+                    updateStatus(`❌ Test failed: ${error.message}`, 'error');
+                    appendTestOutput(`❌ Test execution failed: ${error.message}`);
+                    console.log = originalLog;
+                }
+            }, 500);
+        }
+        
+        function toggleTestOverlay() {
+            const overlay = document.getElementById('testOverlay');
+            overlay.classList.toggle('hidden');
+        }
+        
+        function exportResults() {
+            if (!testResults) {
+                updateStatus('No test results to export', 'warning');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(testResults, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `checkpoint-test-results-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            URL.revokeObjectURL(url);
+            updateStatus('Results exported successfully', 'success');
+        }
+        
+        function clearResults() {
+            document.getElementById('testOutput').innerHTML = '<div style="color: #10b981;">Ready to run checkpoint validation...</div>';
+            testResults = null;
+            updateProgress(0);
+            updateStatus('Results cleared - Ready to run', 'info');
+        }
+        
+        function updateStatus(message, type = 'info') {
+            const statusText = document.getElementById('statusText');
+            const colors = {
+                info: '#3b82f6',
+                success: '#10b981',
+                warning: '#f59e0b',
+                error: '#ef4444'
+            };
+            
+            statusText.innerHTML = `<span style="color: ${colors[type]}">${message}</span>`;
+        }
+        
+        function updateProgress(percentage) {
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = `${percentage}%`;
+        }
+        
+        function appendTestOutput(message) {
+            const testOutput = document.getElementById('testOutput');
+            const div = document.createElement('div');
+            div.textContent = message;
+            
+            // Color coding for different message types
+            if (message.includes('✅')) {
+                div.style.color = '#10b981';
+            } else if (message.includes('❌')) {
+                div.style.color = '#ef4444';
+            } else if (message.includes('⚠️')) {
+                div.style.color = '#f59e0b';
+            } else if (message.includes('🧪') || message.includes('📋') || message.includes('🎨')) {
+                div.style.color = '#3b82f6';
+                div.style.fontWeight = 'bold';
+                div.style.marginTop = '15px';
+            } else if (message.includes('='.repeat(10))) {
+                div.style.color = '#6b7280';
+                div.style.borderTop = '1px solid #374151';
+                div.style.paddingTop = '10px';
+                div.style.marginTop = '15px';
+            }
+            
+            testOutput.appendChild(div);
+            testOutput.scrollTop = testOutput.scrollHeight;
+        }
+        
+        // Auto-run test on page load (optional)
+        document.addEventListener('DOMContentLoaded', () => {
+            updateStatus('Page loaded - Ready for checkpoint test', 'info');
+            
+            // Auto-run test after 3 seconds if desired
+            // setTimeout(runCheckpointTest, 3000);
+        });
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                switch (e.key) {
+                    case 't':
+                        e.preventDefault();
+                        runCheckpointTest();
+                        break;
+                    case 'o':
+                        e.preventDefault();
+                        toggleTestOverlay();
+                        break;
+                    case 's':
+                        e.preventDefault();
+                        exportResults();
+                        break;
+                }
+            }
+        });
+        
+        // Display keyboard shortcuts
+        console.log('🎮 Keyboard Shortcuts:');
+        console.log('  Ctrl+T: Run checkpoint test');
+        console.log('  Ctrl+O: Toggle test overlay');
+        console.log('  Ctrl+S: Export results');
+    </script>
+</body>
+</html>

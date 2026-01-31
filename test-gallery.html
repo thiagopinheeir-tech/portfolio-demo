@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Test - Portfolio Demo</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/gallery.css">
+    <style>
+        /* Test styles for different screen sizes */
+        .test-info {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        Screen: <span id="screenSize"></span><br>
+        Grid Columns: <span id="gridColumns"></span>
+    </div>
+    
+    <div class="portfolio-container">
+        <header class="portfolio-header">
+            <h1>Projetos Realizados</h1>
+            <p>Demonstrações interativas dos sistemas desenvolvidos</p>
+        </header>
+        
+        <div class="project-gallery" id="projectGallery">
+            <!-- Test cards -->
+            <div class="project-card" data-demo="acai-dany" tabindex="0" role="button">
+                <div class="project-image">
+                    <img src="assets/images/project-previews/acai-dany.svg" alt="Preview do Açaí da Dany">
+                </div>
+                <div class="project-info">
+                    <h3>Açaí da Dany</h3>
+                    <p>Sistema de cardápio direto para WhatsApp com interface intuitiva e responsiva</p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <button class="demo-btn">
+                        <span>Ver Demo</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="project-card" data-demo="barbearia-raimundos" tabindex="0" role="button">
+                <div class="project-image">
+                    <img src="assets/images/project-previews/barbearia-raimundos.svg" alt="Preview da Barbearia Raimundos">
+                </div>
+                <div class="project-info">
+                    <h3>Barbearia Raimundos</h3>
+                    <p>Sistema de agendamento para barbearia com interface moderna</p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <button class="demo-btn">
+                        <span>Ver Demo</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="project-card" data-demo="financas-pessoais" tabindex="0" role="button">
+                <div class="project-image">
+                    <img src="assets/images/project-previews/financas-pessoais.svg" alt="Preview do Finanças Pessoais">
+                </div>
+                <div class="project-info">
+                    <h3>Finanças Pessoais</h3>
+                    <p>Sistema de controle financeiro com calculadora de empréstimos</p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <button class="demo-btn">
+                        <span>Ver Demo</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="project-card" data-demo="whatsapp-bot-ai" tabindex="0" role="button">
+                <div class="project-image">
+                    <img src="assets/images/project-previews/whatsapp-bot-ai.svg" alt="Preview do WhatsApp Bot AI">
+                </div>
+                <div class="project-info">
+                    <h3>WhatsApp Bot AI</h3>
+                    <p>Bot inteligente para WhatsApp com interface de chat interativa</p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">AI</span>
+                    </div>
+                    <button class="demo-btn">
+                        <span>Ver Demo</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="project-card" data-demo="landpage-divulga" tabindex="0" role="button">
+                <div class="project-image">
+                    <img src="assets/images/project-previews/landpage-divulga.svg" alt="Preview da Landing Page Divulga">
+                </div>
+                <div class="project-info">
+                    <h3>Landing Page Divulga</h3>
+                    <p>Landing page promocional com design moderno e conversão otimizada</p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <button class="demo-btn">
+                        <span>Ver Demo</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function updateScreenInfo() {
+            const screenSize = document.getElementById('screenSize');
+            const gridColumns = document.getElementById('gridColumns');
+            const gallery = document.querySelector('.project-gallery');
+            
+            screenSize.textContent = `${window.innerWidth}x${window.innerHeight}`;
+            
+            // Get computed grid columns
+            const computedStyle = window.getComputedStyle(gallery);
+            const gridTemplateColumns = computedStyle.gridTemplateColumns;
+            const columnCount = gridTemplateColumns.split(' ').length;
+            gridColumns.textContent = columnCount;
+        }
+        
+        window.addEventListener('resize', updateScreenInfo);
+        window.addEventListener('load', updateScreenInfo);
+        
+        // Test hover effects
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                console.log('Hover effect triggered on:', card.dataset.demo);
+            });
+        });
+    </script>
+</body>
+</html>

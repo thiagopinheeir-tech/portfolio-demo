@@ -1,0 +1,10 @@
+<svg width="400" height="200" viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="400" height="200" fill="#8B5CF6"/>
+<text x="200" y="80" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">Açaí da Dany</text>
+<text x="200" y="110" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Sistema de Cardápio Digital</text>
+<text x="200" y="130" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Integração WhatsApp</text>
+<circle cx="340" cy="60" r="20" fill="#F59E0B"/>
+<svg x="330" y="50" width="20" height="20" viewBox="0 0 24 24" fill="white">
+<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+</svg>
+</svg>

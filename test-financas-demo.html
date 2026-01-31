@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Finanças Pessoais Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .demo-frame {
+            width: 100%;
+            height: 600px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Teste - Demo Finanças Pessoais</h1>
+        <p>Este teste verifica se o demo do JP Empréstimos está funcionando corretamente.</p>
+        
+        <div id="test-results"></div>
+        
+        <h2>Demo Preview</h2>
+        <iframe src="demos/financas-pessoais/index.html" class="demo-frame" id="demo-frame"></iframe>
+        
+        <div>
+            <button onclick="runTests()">🔄 Executar Testes</button>
+            <button onclick="openDemo()">🚀 Abrir Demo</button>
+            <button onclick="checkFiles()">📁 Verificar Arquivos</button>
+        </div>
+    </div>
+
+    <script>
+        function addTestResult(message, success = true) {
+            const resultsDiv = document.getElementById('test-results');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `test-result ${success ? 'success' : 'error'}`;
+            resultDiv.innerHTML = `${success ? '✅' : '❌'} ${message}`;
+            resultsDiv.appendChild(resultDiv);
+        }
+
+        function clearResults() {
+            document.getElementById('test-results').innerHTML = '';
+        }
+
+        async function checkFiles() {
+            clearResults();
+            addTestResult('Iniciando verificação de arquivos...');
+            
+            const files = [
+                'demos/financas-pessoais/index.html',
+                'demos/financas-pessoais/styles.css',
+                'demos/financas-pessoais/script.js',
+                'demos/financas-pessoais/README.md'
+            ];
+            
+            for (const file of files) {
+                try {
+                    const response = await fetch(file);
+                    if (response.ok) {
+                        addTestResult(`Arquivo encontrado: ${file}`);
+                    } else {
+                        addTestResult(`Arquivo não encontrado: ${file}`, false);
+                    }
+                } catch (error) {
+                    addTestResult(`Erro ao verificar ${file}: ${error.message}`, false);
+                }
+            }
+        }
+
+        function runTests() {
+            clearResults();
+            addTestResult('Iniciando testes do demo...');
+            
+            // Test 1: Check if iframe loads
+            const iframe = document.getElementById('demo-frame');
+            iframe.onload = function() {
+                addTestResult('Demo carregado com sucesso no iframe');
+                
+                try {
+                    // Test 2: Check if demo has required elements
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    
+                    if (iframeDoc.querySelector('.demo-nav')) {
+                        addTestResult('Navegação do demo encontrada');
+                    } else {
+                        addTestResult('Navegação do demo não encontrada', false);
+                    }
+                    
+                    if (iframeDoc.querySelector('.header')) {
+                        addTestResult('Header do demo encontrado');
+                    } else {
+                        addTestResult('Header do demo não encontrado', false);
+                    }
+                    
+                    if (iframeDoc.querySelector('.dashboard-grid')) {
+                        addTestResult('Dashboard grid encontrado');
+                    } else {
+                        addTestResult('Dashboard grid não encontrado', false);
+                    }
+                    
+                    if (iframeDoc.querySelector('#amount')) {
+                        addTestResult('Campo de valor do empréstimo encontrado');
+                    } else {
+                        addTestResult('Campo de valor do empréstimo não encontrado', false);
+                    }
+                    
+                    if (iframeDoc.querySelector('.client-list')) {
+                        addTestResult('Lista de clientes encontrada');
+                    } else {
+                        addTestResult('Lista de clientes não encontrada', false);
+                    }
+                    
+                    addTestResult('Todos os testes de estrutura concluídos!');
+                    
+                } catch (error) {
+                    addTestResult(`Erro ao acessar conteúdo do iframe: ${error.message}`, false);
+                }
+            };
+            
+            iframe.onerror = function() {
+                addTestResult('Erro ao carregar o demo no iframe', false);
+            };
+            
+            // Reload iframe to trigger tests
+            iframe.src = iframe.src;
+        }
+
+        function openDemo() {
+            window.open('demos/financas-pessoais/index.html', '_blank');
+        }
+
+        // Auto-run tests when page loads
+        window.addEventListener('load', function() {
+            setTimeout(runTests, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Bot AI - Demo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="demo-wrapper" data-demo="whatsapp-bot-ai">
+        <div class="app-container" style="margin-top: 60px;">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    🤖
+                </div>
+                <h2>WhatsApp Bot AI</h2>
+            </div>
+            
+            <!-- Navigation Menu -->
+            <div class="nav-menu">
+                <div class="nav-item active" onclick="showSection('conversations')">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-3.582 8-8 8a8.955 8.955 0 01-4.906-1.681L3 21l2.681-5.094A8.955 8.955 0 013 12c0-4.418 3.582-8 8-8s8 3.582 8 8z"></path>
+                    </svg>
+                    <span>Conversas</span>
+                </div>
+                <div class="nav-item" onclick="showSection('dashboard')">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                    <span>Dashboard</span>
+                </div>
+                <div class="nav-item" onclick="showSection('chatbot')">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span>Configurações</span>
+                </div>
+            </div>
+            
+            <!-- Conversations Section -->
+            <div class="conversations-section" id="conversationsSection">
+                <div class="section-title">Conversas Recentes</div>
+                
+                <!-- Stats Cards -->
+                <div class="stats-card">
+                    <div class="stats-header">
+                        <div>
+                            <div class="stats-title">Contatos Únicos</div>
+                            <div class="stats-value">24</div>
+                        </div>
+                        <svg class="stats-icon" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- Conversation Items -->
+                <div class="conversation-item active" onclick="selectConversation('cliente1', this)">
+                    <div class="conversation-header">
+                        <div class="conversation-phone">(11) 99999-1234</div>
+                        <div class="conversation-time">14:30</div>
+                    </div>
+                    <div class="conversation-preview">
+                        <span>Olá, preciso de ajuda...</span>
+                        <div class="message-count">5</div>
+                    </div>
+                </div>
+                
+                <div class="conversation-item" onclick="selectConversation('cliente2', this)">
+                    <div class="conversation-header">
+                        <div class="conversation-phone">(11) 98888-5678</div>
+                        <div class="conversation-time">13:45</div>
+                    </div>
+                    <div class="conversation-preview">
+                        <svg class="audio-indicator" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+                        </svg>
+                        <span>Mensagem de áudio</span>
+                        <div class="message-count">3</div>
+                    </div>
+                </div>
+                
+                <div class="conversation-item" onclick="selectConversation('cliente3', this)">
+                    <div class="conversation-header">
+                        <div class="conversation-phone">(11) 97777-9012</div>
+                        <div class="conversation-time">12:20</div>
+                    </div>
+                    <div class="conversation-preview">
+                        <span>Gostaria de fazer um pedido</span>
+                        <div class="message-count">8</div>
+                    </div>
+                </div>
+                
+                <div class="conversation-item" onclick="selectConversation('cliente4', this)">
+                    <div class="conversation-header">
+                        <div class="conversation-phone">(11) 96666-3456</div>
+                        <div class="conversation-time">11:15</div>
+                    </div>
+                    <div class="conversation-preview">
+                        <span>Qual o horário de funcionamento?</span>
+                        <div class="message-count">2</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Chat Area -->
+        <div class="chat-area">
+            <div class="chat-header">
+                <div style="width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    👤
+                </div>
+                <div>
+                    <h3 id="chatName">(11) 99999-1234</h3>
+                    <div class="status">online • última vez hoje às 14:30</div>
+                </div>
+            </div>
+            
+            <div class="messages" id="messages">
+                <div class="message user">
+                    <div class="message-content">Olá, preciso de ajuda com meu pedido</div>
+                    <div class="message-time">14:30</div>
+                </div>
+                
+                <div class="message bot">
+                    <div class="message-content">Olá! 👋 Sou o assistente virtual da empresa. Como posso ajudá-lo hoje? 😊</div>
+                    <div class="message-time">14:30</div>
+                </div>
+                
+                <div class="message user">
+                    <div class="message-content">Qual o horário de funcionamento?</div>
+                    <div class="message-time">14:31</div>
+                </div>
+                
+                <div class="message bot">
+                    <div class="message-content">Nosso horário de funcionamento é:<br><br>
+                    📅 <strong>Segunda a Sexta:</strong> 8h às 18h<br>
+                    📅 <strong>Sábado:</strong> 8h às 14h<br>
+                    📅 <strong>Domingo:</strong> Fechado<br><br>
+                    Posso ajudar com mais alguma coisa? 🤔</div>
+                    <div class="message-time">14:31</div>
+                </div>
+                
+                <div class="message user">
+                    <div class="message-content">Perfeito! Obrigado pela informação</div>
+                    <div class="message-time">14:32</div>
+                </div>
+                
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="input-area">
+                <input type="text" class="message-input" id="messageInput" placeholder="Digite uma mensagem..." onkeypress="handleKeyPress(event)">
+                <button class="send-btn" onclick="sendMessage()" id="sendButton">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22,2 15,22 11,13 2,9"></polygon>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Enhanced Navigation System -->
+    <link rel="stylesheet" href="../../assets/css/navigation.css">
+    <script src="../../assets/js/navigation.js"></script>
+    
+    <script src="script.js"></script>
+    
+    <!-- State Reset System -->
+    <script src="../../state-reset-system.js"></script>
+</body>
+</html>

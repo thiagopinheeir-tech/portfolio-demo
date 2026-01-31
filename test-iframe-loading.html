@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Iframe Loading - Portfolio Demo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .test-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .demo-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .demo-btn {
+            padding: 10px 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .demo-btn:hover {
+            background: #1d4ed8;
+        }
+        
+        .iframe-container {
+            width: 100%;
+            height: 600px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 10;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2563eb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>🧪 Test Iframe Loading Functionality</h1>
+            <p>Test the iframe-based demo loading system with error handling and loading states</p>
+        </div>
+        
+        <div class="demo-buttons">
+            <button class="demo-btn" onclick="loadDemo('acai-dany')">Açaí da Dany</button>
+            <button class="demo-btn" onclick="loadDemo('barbearia-raimundos')">Barbearia Raimundos</button>
+            <button class="demo-btn" onclick="loadDemo('financas-pessoais')">Finanças Pessoais</button>
+            <button class="demo-btn" onclick="loadDemo('whatsapp-bot-ai')">WhatsApp Bot AI</button>
+            <button class="demo-btn" onclick="loadDemo('landpage-divulga')">Landing Page Divulga</button>
+            <button class="demo-btn" onclick="loadDemo('non-existent')" style="background: #dc3545;">Test Error</button>
+        </div>
+        
+        <div class="iframe-container" id="iframeContainer">
+            <iframe id="testFrame" src=""></iframe>
+            <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+                <div class="spinner"></div>
+                <p>Loading demo...</p>
+            </div>
+        </div>
+        
+        <div class="status" id="status" style="display: none;"></div>
+    </div>
+    
+    <script>
+        const demos = {
+            'acai-dany': './demos/acai-dany/index.html',
+            'barbearia-raimundos': './demos/barbearia-raimundos/index.html',
+            'financas-pessoais': './demos/financas-pessoais/index.html',
+            'whatsapp-bot-ai': './demos/whatsapp-bot-ai/index.html',
+            'landpage-divulga': './demos/landpage-divulga/index.html',
+            'non-existent': './demos/non-existent/index.html'
+        };
+        
+        let loadingTimeout;
+        
+        function loadDemo(demoKey) {
+            const iframe = document.getElementById('testFrame');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const status = document.getElementById('status');
+            
+            // Clear previous status
+            status.style.display = 'none';
+            
+            // Show loading
+            loadingOverlay.style.display = 'flex';
+            
+            // Clear any existing timeout
+            if (loadingTimeout) {
+                clearTimeout(loadingTimeout);
+            }
+            
+            // Set loading timeout (10 seconds)
+            loadingTimeout = setTimeout(() => {
+                hideLoading();
+                showStatus('error', `Timeout: Failed to load ${demoKey} demo`);
+            }, 10000);
+            
+            // Setup iframe event handlers
+            const onLoad = () => {
+                clearTimeout(loadingTimeout);
+                iframe.removeEventListener('load', onLoad);
+                iframe.removeEventListener('error', onError);
+                
+                hideLoading();
+                showStatus('success', `Successfully loaded ${demoKey} demo`);
+            };
+            
+            const onError = () => {
+                clearTimeout(loadingTimeout);
+                iframe.removeEventListener('load', onLoad);
+                iframe.removeEventListener('error', onError);
+                
+                hideLoading();
+                showStatus('error', `Error: Failed to load ${demoKey} demo`);
+            };
+            
+            // Attach event listeners
+            iframe.addEventListener('load', onLoad);
+            iframe.addEventListener('error', onError);
+            
+            // Load the demo
+            const demoUrl = demos[demoKey];
+            console.log(`Loading demo: ${demoKey} from ${demoUrl}`);
+            iframe.src = demoUrl;
+        }
+        
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+        
+        function showStatus(type, message) {
+            const status = document.getElementById('status');
+            status.className = `status ${type}`;
+            status.textContent = message;
+            status.style.display = 'block';
+            
+            // Auto-hide success messages after 3 seconds
+            if (type === 'success') {
+                setTimeout(() => {
+                    status.style.display = 'none';
+                }, 3000);
+            }
+        }
+        
+        // Load first demo by default
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDemo('acai-dany');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deployment Testing - Portfolio Demo System</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            margin: 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .test-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .test-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-pending { background: #f59e0b; }
+        .status-running { background: #3b82f6; animation: pulse 1.5s infinite; }
+        .status-success { background: #10b981; }
+        .status-error { background: #ef4444; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .results-container {
+            margin-top: 30px;
+        }
+
+        .test-result {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border-left: 4px solid;
+            background: #f8fafc;
+        }
+
+        .test-result.passed {
+            border-left-color: #10b981;
+            background: #ecfdf5;
+        }
+
+        .test-result.failed {
+            border-left-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .test-result .icon {
+            margin-right: 12px;
+            font-size: 1.2rem;
+        }
+
+        .test-result .name {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .test-result .message {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-left: 12px;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .summary-card .number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .summary-card .label {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .summary-card.total .number { color: #3b82f6; }
+        .summary-card.passed .number { color: #10b981; }
+        .summary-card.failed .number { color: #ef4444; }
+        .summary-card.percentage .number { color: #8b5cf6; }
+
+        .log-container {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9rem;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+
+        .log-entry {
+            margin: 4px 0;
+            padding: 2px 0;
+        }
+
+        .log-entry.info { color: #60a5fa; }
+        .log-entry.success { color: #34d399; }
+        .log-entry.error { color: #f87171; }
+
+        .deployment-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .deployment-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .deployment-card h3 {
+            margin: 0 0 10px 0;
+            color: #1f2937;
+        }
+
+        .deployment-card p {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin: 0 0 15px 0;
+        }
+
+        .deployment-card .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 Deployment Testing</h1>
+        <p>Teste de compatibilidade com hospedagem estática</p>
+    </div>
+
+    <div class="test-container">
+        <div class="test-controls">
+            <button id="runTests" class="btn btn-primary">
+                <span class="loading hidden"></span>
+                <span class="text">▶️ Executar Testes</span>
+            </button>
+            <button id="clearResults" class="btn btn-secondary">
+                🗑️ Limpar Resultados
+            </button>
+            <a href="./DEPLOYMENT.md" class="btn btn-success" target="_blank">
+                📖 Guia de Deploy
+            </a>
+        </div>
+
+        <div id="testStatus" class="hidden">
+            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                <span class="status-indicator status-running"></span>
+                <span>Executando testes de deployment...</span>
+            </div>
+        </div>
+
+        <div id="summaryContainer" class="hidden">
+            <div class="summary">
+                <div class="summary-card total">
+                    <div class="number" id="totalTests">0</div>
+                    <div class="label">Total de Testes</div>
+                </div>
+                <div class="summary-card passed">
+                    <div class="number" id="passedTests">0</div>
+                    <div class="label">Aprovados</div>
+                </div>
+                <div class="summary-card failed">
+                    <div class="number" id="failedTests">0</div>
+                    <div class="label">Falharam</div>
+                </div>
+                <div class="summary-card percentage">
+                    <div class="number" id="successRate">0%</div>
+                    <div class="label">Taxa de Sucesso</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="resultsContainer" class="results-container hidden">
+            <h3>Resultados dos Testes</h3>
+            <div id="testResults"></div>
+        </div>
+
+        <div id="logContainer" class="hidden">
+            <h3>Log de Execução</h3>
+            <div class="log-container" id="logOutput"></div>
+        </div>
+    </div>
+
+    <div class="deployment-links">
+        <div class="deployment-card">
+            <h3>🐙 GitHub Pages</h3>
+            <p>Deploy automático via GitHub Actions</p>
+            <a href="https://docs.github.com/pages" class="btn btn-primary" target="_blank">
+                Documentação
+            </a>
+        </div>
+        <div class="deployment-card">
+            <h3>🌐 Netlify</h3>
+            <p>Deploy contínuo com otimizações</p>
+            <a href="https://netlify.com" class="btn btn-primary" target="_blank">
+                Acessar Netlify
+            </a>
+        </div>
+        <div class="deployment-card">
+            <h3>▲ Vercel</h3>
+            <p>Deploy serverless otimizado</p>
+            <a href="https://vercel.com" class="btn btn-primary" target="_blank">
+                Acessar Vercel
+            </a>
+        </div>
+        <div class="deployment-card">
+            <h3>🔥 Firebase</h3>
+            <p>Hospedagem com CDN global</p>
+            <a href="https://firebase.google.com/docs/hosting" class="btn btn-primary" target="_blank">
+                Documentação
+            </a>
+        </div>
+    </div>
+
+    <script src="./test-deployment.js"></script>
+    <script>
+        class DeploymentTestUI {
+            constructor() {
+                this.tester = new DeploymentTester();
+                this.setupEventListeners();
+                this.overrideConsole();
+            }
+
+            setupEventListeners() {
+                document.getElementById('runTests').addEventListener('click', () => {
+                    this.runTests();
+                });
+
+                document.getElementById('clearResults').addEventListener('click', () => {
+                    this.clearResults();
+                });
+            }
+
+            overrideConsole() {
+                const originalLog = console.log;
+                const logOutput = document.getElementById('logOutput');
+
+                console.log = (...args) => {
+                    originalLog.apply(console, args);
+                    
+                    const message = args.join(' ');
+                    const logEntry = document.createElement('div');
+                    logEntry.className = 'log-entry';
+                    
+                    if (message.includes('❌')) {
+                        logEntry.className += ' error';
+                    } else if (message.includes('✅')) {
+                        logEntry.className += ' success';
+                    } else {
+                        logEntry.className += ' info';
+                    }
+                    
+                    logEntry.textContent = message;
+                    logOutput.appendChild(logEntry);
+                    logOutput.scrollTop = logOutput.scrollHeight;
+                };
+            }
+
+            async runTests() {
+                const runButton = document.getElementById('runTests');
+                const loading = runButton.querySelector('.loading');
+                const text = runButton.querySelector('.text');
+                
+                // Update button state
+                runButton.disabled = true;
+                loading.classList.remove('hidden');
+                text.textContent = 'Executando...';
+                
+                // Show status
+                document.getElementById('testStatus').classList.remove('hidden');
+                document.getElementById('logContainer').classList.remove('hidden');
+                document.getElementById('logOutput').innerHTML = '';
+                
+                try {
+                    const result = await this.tester.runAllTests();
+                    this.displayResults(result);
+                } catch (error) {
+                    console.error('Erro ao executar testes:', error);
+                } finally {
+                    // Reset button state
+                    runButton.disabled = false;
+                    loading.classList.add('hidden');
+                    text.textContent = '▶️ Executar Testes';
+                    document.getElementById('testStatus').classList.add('hidden');
+                }
+            }
+
+            displayResults(result) {
+                // Update summary
+                document.getElementById('totalTests').textContent = result.details.passed + result.details.failed;
+                document.getElementById('passedTests').textContent = result.details.passed;
+                document.getElementById('failedTests').textContent = result.details.failed;
+                document.getElementById('successRate').textContent = result.percentage + '%';
+                
+                // Show summary
+                document.getElementById('summaryContainer').classList.remove('hidden');
+                
+                // Display individual test results
+                const resultsContainer = document.getElementById('testResults');
+                resultsContainer.innerHTML = '';
+                
+                result.details.tests.forEach(test => {
+                    const testElement = document.createElement('div');
+                    testElement.className = `test-result ${test.status}`;
+                    
+                    const icon = test.status === 'passed' ? '✅' : '❌';
+                    
+                    testElement.innerHTML = `
+                        <span class="icon">${icon}</span>
+                        <span class="name">${test.name}</span>
+                        ${test.message && test.status === 'failed' ? `<span class="message">${test.message}</span>` : ''}
+                    `;
+                    
+                    resultsContainer.appendChild(testElement);
+                });
+                
+                document.getElementById('resultsContainer').classList.remove('hidden');
+            }
+
+            clearResults() {
+                document.getElementById('summaryContainer').classList.add('hidden');
+                document.getElementById('resultsContainer').classList.add('hidden');
+                document.getElementById('logContainer').classList.add('hidden');
+                document.getElementById('testStatus').classList.add('hidden');
+                
+                // Reset tester
+                this.tester = new DeploymentTester();
+            }
+        }
+
+        // Initialize UI when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new DeploymentTestUI();
+        });
+    </script>
+</body>
+</html>

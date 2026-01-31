@@ -1,0 +1,10 @@
+<svg width="400" height="200" viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="400" height="200" fill="#EF4444"/>
+<text x="200" y="80" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">Landing Page Divulga</text>
+<text x="200" y="110" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Design Moderno</text>
+<text x="200" y="130" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Conversão Otimizada</text>
+<circle cx="340" cy="60" r="20" fill="#F59E0B"/>
+<svg x="330" y="50" width="20" height="20" viewBox="0 0 24 24" fill="white">
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+</svg>
+</svg>

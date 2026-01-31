@@ -1,0 +1,103 @@
+# GitHub Pages Configuration for Portfolio Demo System
+
+# Site settings
+title: "Portfolio Demo System"
+description: "Sistema de demonstração de portfolio com 5 projetos interativos"
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+# Exclude files from processing
+exclude:
+  - README.md
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .sass-cache
+  - .jekyll-cache
+  - .jekyll-metadata
+  - .git
+  - .gitignore
+  - package.json
+  - package-lock.json
+  - yarn.lock
+  - "*.log"
+  - "test-*.html"
+  - "test-*.js"
+  - "validate-*.js"
+  - "validate-*.ps1"
+  - "simple-*.js"
+  - "checkpoint-*.html"
+  - "checkpoint-*.js"
+  - "*IMPLEMENTATION_SUMMARY.md"
+  - "*TASK_*.md"
+
+# Include files that would normally be excluded
+include:
+  - .htaccess
+  - _pages
+
+# Plugin settings
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# SEO settings
+lang: pt-BR
+author: "Portfolio Demo System"
+
+# Social media and contact
+social:
+  name: "Portfolio Demo System"
+  links: []
+
+# Analytics (optional)
+google_analytics: ""
+
+# Collections (if needed)
+collections:
+  demos:
+    output: true
+    permalink: /:collection/:name/
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "demos"
+    values:
+      layout: "demo"
+
+# Sass settings
+sass:
+  sass_dir: assets/css
+  style: compressed
+
+# Compression settings
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  startings: []
+  blanklines: false
+  profile: false
+
+# Security settings
+safe: true
+incremental: false
+lsi: false
+
+# Timezone
+timezone: America/Sao_Paulo
