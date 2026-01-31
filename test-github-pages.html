@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Pages Deployment Test</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #050816;
+            color: white;
+        }
+        .test-container {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .success {
+            color: #4ade80;
+            font-weight: bold;
+        }
+        .test-item {
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        .btn {
+            background: linear-gradient(135deg, #4ade80, #0ea5e9);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-weight: 600;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🚀 GitHub Pages Deployment Test</h1>
+        <p class="success">✅ GitHub Pages está funcionando corretamente!</p>
+        
+        <div class="test-item">
+            <h3>📋 Status do Deployment:</h3>
+            <p><strong>Data:</strong> <span id="currentDate"></span></p>
+            <p><strong>URL:</strong> <span id="currentUrl"></span></p>
+            <p><strong>Commit:</strong> 5b0026c - fix: Correct file paths for deployment</p>
+        </div>
+        
+        <div class="test-item">
+            <h3>🎯 Testes de Funcionalidade:</h3>
+            <div id="testResults"></div>
+        </div>
+        
+        <div class="test-item">
+            <h3>🔗 Links de Teste:</h3>
+            <button class="btn" onclick="testMainPage()">Testar Página Principal</button>
+            <button class="btn" onclick="testPortfolioGallery()">Testar Portfolio Gallery</button>
+            <button class="btn" onclick="testDemo('acai-dany')">Testar Demo Açaí</button>
+            <button class="btn" onclick="testDemo('financas-pessoais')">Testar Demo Finanças</button>
+        </div>
+        
+        <div class="test-item">
+            <h3>📊 Informações do Sistema:</h3>
+            <p><strong>User Agent:</strong> <span id="userAgent"></span></p>
+            <p><strong>Viewport:</strong> <span id="viewport"></span></p>
+            <p><strong>Referrer:</strong> <span id="referrer"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize test page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current info
+            document.getElementById('currentDate').textContent = new Date().toLocaleString('pt-BR');
+            document.getElementById('currentUrl').textContent = window.location.href;
+            document.getElementById('userAgent').textContent = navigator.userAgent;
+            document.getElementById('viewport').textContent = window.innerWidth + 'x' + window.innerHeight;
+            document.getElementById('referrer').textContent = document.referrer || 'Direct';
+            
+            // Run automatic tests
+            runAutomaticTests();
+        });
+        
+        function runAutomaticTests() {
+            const results = document.getElementById('testResults');
+            const tests = [
+                { name: 'CSS Loading', test: () => getComputedStyle(document.body).backgroundColor !== 'rgba(0, 0, 0, 0)' },
+                { name: 'JavaScript Execution', test: () => true },
+                { name: 'DOM Manipulation', test: () => document.querySelector('.test-container') !== null },
+                { name: 'Local Storage', test: () => typeof(Storage) !== "undefined" },
+                { name: 'Fetch API', test: () => typeof fetch !== 'undefined' }
+            ];
+            
+            let html = '';
+            tests.forEach(test => {
+                const passed = test.test();
+                html += `<p>${passed ? '✅' : '❌'} ${test.name}: ${passed ? 'PASS' : 'FAIL'}</p>`;
+            });
+            
+            results.innerHTML = html;
+        }
+        
+        function testMainPage() {
+            window.open('/', '_blank');
+        }
+        
+        function testPortfolioGallery() {
+            window.open('/portfolio-gallery.html', '_blank');
+        }
+        
+        function testDemo(demoName) {
+            window.open(`/demos/${demoName}/index.html`, '_blank');
+        }
+        
+        console.log('🎯 GitHub Pages Deployment Test loaded successfully!');
+        console.log('Repository: https://github.com/thiagopinheeir-tech/portfolio-demo');
+        console.log('GitHub Pages URL: https://thiagopinheeir-tech.github.io/portfolio-demo/');
+    </script>
+</body>
+</html>
