@@ -19,7 +19,13 @@
   status = 200
 
 [[redirects]]
-  # Fallback for any other routes to index.html
+  # Handle portfolio gallery access
+  from = "/portfolio"
+  to = "/portfolio-gallery.html"
+  status = 200
+
+[[redirects]]
+  # Fallback for any other routes to index.html (TTECH Landing Page)
   from = "/*"
   to = "/index.html"
   status = 200

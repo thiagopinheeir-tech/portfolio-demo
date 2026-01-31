@@ -650,6 +650,11 @@ class DemoSystem {
                 name: 'WhatsApp Bot AI',
                 url: '../whatsapp-bot-ai/index.html',
                 description: 'Chatbot inteligente com IA para atendimento'
+            },
+            'portfolio-gallery': {
+                name: 'Portfolio Gallery',
+                url: '../../portfolio-gallery.html',
+                description: 'Sistema completo de portfolio com galeria interativa'
             }
         };
         

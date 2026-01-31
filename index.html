@@ -3,281 +3,385 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Demo - Projetos Realizados</title>
-    <meta name="description" content="Demonstrações interativas dos sistemas desenvolvidos com foco em acessibilidade e usabilidade">
+    <title>TTECH Desenvolvimento | Sistemas, Sites e Automações de IA</title>
+    <meta name="description" content="Transforme seu negócio com sistemas, sites e automações de IA. Soluções sob medida para barbearias, clínicas, financeiras e negócios locais que multiplicam resultados.">
     
-    <!-- Performance Meta Tags -->
-    <meta name="theme-color" content="#2563eb">
-    <meta name="color-scheme" content="light dark">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="./demos/landpage-divulga/public/favicon.ico">
     
-    <!-- Resource Hints -->
-    <link rel="dns-prefetch" href="//fonts.googleapis.com">
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <!-- Critical CSS (Inlined for Performance) -->
-    <style>
-        /* Critical above-the-fold styles */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1e293b; background: #f8fafc; }
-        .portfolio-container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
-        .portfolio-header { text-align: center; margin-bottom: 4rem; }
-        .portfolio-header h1 { font-size: 2.25rem; font-weight: 700; color: #0f172a; margin-bottom: 1rem; }
-        .portfolio-header p { font-size: 1.125rem; color: #475569; max-width: 600px; margin: 0 auto; }
-        .loading-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 5rem; color: #64748b; }
-        .spinner { width: 40px; height: 40px; border: 4px solid #e2e8f0; border-top: 4px solid #2563eb; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
-    
-    <!-- Preload Critical Resources -->
-    <link rel="preload" href="assets/css/main.css" as="style">
-    <link rel="preload" href="assets/css/gallery.css" as="style">
-    <link rel="preload" href="assets/css/performance.css" as="style">
-    <link rel="preload" href="assets/js/performance.js" as="script">
-    <link rel="preload" href="assets/js/main.js" as="script">
-    
-    <!-- Critical CSS Files -->
-    <link rel="stylesheet" href="assets/css/main.css" data-critical>
-    <link rel="stylesheet" href="assets/css/gallery.css" data-critical>
-    <link rel="stylesheet" href="assets/css/performance.css" data-critical>
-    
-    <!-- Non-Critical CSS (Loaded Asynchronously) -->
-    <link rel="preload" href="assets/css/navigation.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="assets/css/accessibility.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="assets/css/navigation.css">
-        <link rel="stylesheet" href="assets/css/accessibility.css">
-    </noscript>
-    
-    <!-- Favicon with Multiple Sizes -->
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
-    
-    <!-- Performance Monitoring Script (Inline for Immediate Execution) -->
-    <script>
-        // Inline performance monitoring for critical metrics
-        window.performanceStart = performance.now();
-        window.performanceMetrics = {
-            navigationStart: performance.timing?.navigationStart || Date.now(),
-            loadStart: performance.now(),
-            criticalResourcesLoaded: 0,
-            totalCriticalResources: 3
-        };
-        
-        // Track critical resource loading
-        function trackCriticalResource() {
-            window.performanceMetrics.criticalResourcesLoaded++;
-            if (window.performanceMetrics.criticalResourcesLoaded >= window.performanceMetrics.totalCriticalResources) {
-                window.performanceMetrics.criticalLoadComplete = performance.now();
-                console.log('Critical resources loaded in:', window.performanceMetrics.criticalLoadComplete - window.performanceMetrics.loadStart, 'ms');
-            }
-        }
-    </script>
+    <!-- Styles -->
+    <link rel="stylesheet" href="./demos/landpage-divulga/styles.css">
 </head>
 <body>
-    <!-- Skip Links for Accessibility -->
-    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
-    
-    <!-- Performance Indicator -->
-    <div id="performance-indicator" class="performance-indicator" role="status" aria-live="polite"></div>
-    
-    <!-- Portfolio Container -->
-    <div class="portfolio-container" role="main" id="main-content">
-        <!-- Header Section -->
-        <header class="portfolio-header">
-            <h1>Projetos Realizados</h1>
-            <p>Demonstrações interativas dos sistemas desenvolvidos com foco em acessibilidade e experiência do usuário</p>
-        </header>
-        
-        <!-- Project Gallery -->
-        <section class="project-gallery" id="projectGallery" aria-label="Galeria de projetos">
-            <!-- Skeleton loading cards while content loads -->
-            <div class="skeleton-card" aria-hidden="true">
-                <div class="skeleton-image"></div>
-                <div class="skeleton-content">
-                    <div class="skeleton-title"></div>
-                    <div class="skeleton-text"></div>
-                    <div class="skeleton-text"></div>
-                    <div class="skeleton-tags">
-                        <div class="skeleton-tag"></div>
-                        <div class="skeleton-tag"></div>
-                        <div class="skeleton-tag"></div>
-                    </div>
-                    <div class="skeleton-button"></div>
-                </div>
-            </div>
-            <div class="skeleton-card" aria-hidden="true">
-                <div class="skeleton-image"></div>
-                <div class="skeleton-content">
-                    <div class="skeleton-title"></div>
-                    <div class="skeleton-text"></div>
-                    <div class="skeleton-text"></div>
-                    <div class="skeleton-tags">
-                        <div class="skeleton-tag"></div>
-                        <div class="skeleton-tag"></div>
-                    </div>
-                    <div class="skeleton-button"></div>
-                </div>
-            </div>
-            <div class="skeleton-card" aria-hidden="true">
-                <div class="skeleton-image"></div>
-                <div class="skeleton-content">
-                    <div class="skeleton-title"></div>
-                    <div class="skeleton-text"></div>
-                    <div class="skeleton-text"></div>
-                    <div class="skeleton-tags">
-                        <div class="skeleton-tag"></div>
-                        <div class="skeleton-tag"></div>
-                        <div class="skeleton-tag"></div>
-                    </div>
-                    <div class="skeleton-button"></div>
-                </div>
-            </div>
-            <!-- Project cards will be dynamically generated here -->
-        </section>
-        
-        <!-- Loading State -->
-        <div class="loading-state" id="loadingState" role="status" aria-live="polite" aria-label="Carregando projetos">
-            <div class="spinner" aria-hidden="true"></div>
-            <p>Carregando projetos...</p>
+    <div class="demo-wrapper" data-demo="landpage-divulga">
+        <!-- Header -->
+        <header class="header">
+        <div class="nav-container">
+            <div class="logo">TTECH</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#hero">Início</a></li>
+                    <li><a href="#services">Serviços</a></li>
+                    <li><a href="#projects">Portfolio</a></li>
+                    <li><a href="#pricing">Preços</a></li>
+                    <li><a href="#contact">Contato</a></li>
+                </ul>
+            </nav>
         </div>
-    </div>
-    
-    <!-- Demo Modal -->
-    <div class="demo-modal" id="demoModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="demoTitle">
-        <div class="demo-container">
-            <div class="demo-header">
-                <h2 id="demoTitle">Project Name</h2>
-                <button class="close-demo" id="closeDemoBtn" aria-label="Fechar demo" type="button">&times;</button>
-            </div>
-            <div class="demo-content">
-                <!-- Loading overlay for demo content -->
-                <div class="loading-overlay" id="demoLoadingOverlay">
-                    <div class="loading-content">
-                        <div class="loading-spinner"></div>
-                        <p class="loading-text">Carregando demonstração...</p>
-                        <div class="loading-progress">
-                            <div class="progress-bar"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Error overlay for demo content -->
-                <div class="error-overlay" id="demoErrorOverlay">
-                    <div class="error-content">
-                        <div class="error-icon">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"/>
-                                <line x1="15" y1="9" x2="9" y2="15"/>
-                                <line x1="9" y1="9" x2="15" y2="15"/>
-                            </svg>
-                        </div>
-                        <h3 class="error-title">Erro ao Carregar Demo</h3>
-                        <p class="error-message">Não foi possível carregar a demonstração. Verifique sua conexão e tente novamente.</p>
-                        <div class="error-actions">
-                            <button class="retry-btn" onclick="retryDemoLoad()">Tentar Novamente</button>
-                            <button class="cancel-btn" onclick="closeDemoModal()">Fechar</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <iframe id="demoFrame" src="" frameborder="0" title="Demo do projeto" aria-label="Demonstração interativa do projeto" loading="lazy"></iframe>
-            </div>
-            <div class="demo-footer">
-                <button class="fullscreen-btn" id="fullscreenBtn" type="button" aria-label="Abrir em tela cheia">Tela Cheia</button>
-                <a href="#" target="_blank" class="external-link" id="externalLink" aria-label="Abrir demo em nova aba">Abrir em Nova Aba</a>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <div class="hero-tag">TTECH DESENVOLVIMENTO · COMPLETO DO 0 AO 100%</div>
+            <h1>
+                <span class="gradient-text">Transforme seu negócio</span><br>
+                com sistemas, sites e automações de IA
+            </h1>
+            <p>Barbearias, clínicas, financeiras e negócios locais. Soluções sob medida que multiplicam resultados.</p>
+            <div class="hero-buttons">
+                <a href="https://wa.me/5511999999999" target="_blank" class="btn-primary">
+                    Começar Projeto Agora
+                    <span>→</span>
+                </a>
+                <a href="#projects" class="btn-secondary">
+                    <span>▶</span>
+                    Ver Portfolio
+                </a>
             </div>
         </div>
-    </div>
-    
-    <!-- Critical JavaScript (Loaded Immediately) -->
-    <script src="assets/js/performance.js" onload="trackCriticalResource()"></script>
-    <script src="assets/js/main.js" onload="trackCriticalResource()"></script>
-    
-    <!-- Non-Critical JavaScript (Loaded Asynchronously) -->
-    <script>
-        // Load non-critical scripts after page load
-        window.addEventListener('load', function() {
-            const scripts = [
-                'assets/js/file-operations.js',
-                'assets/js/navigation.js',
-                'assets/js/accessibility.js',
-                'assets/js/demo-loader.js',
-                'validate-gallery.js'
-            ];
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="stats">
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-value">50+</div>
+                <div class="stat-label">Projetos Entregues</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">98%</div>
+                <div class="stat-label">Clientes Satisfeitos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">24/7</div>
+                <div class="stat-label">Suporte Técnico</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-tag">Nossos Serviços</div>
+                <h2 class="section-title">O que <span class="gradient-text">Fazemos</span></h2>
+                <p class="section-description">Soluções tecnológicas completas para impulsionar seu negócio</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🤖</div>
+                    <h3>Automações com IA</h3>
+                    <p>Chatbots inteligentes, APIs, fluxos automáticos e integrações com WhatsApp/CRM que trabalham por você 24/7.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🌐</div>
+                    <h3>Desenvolvimento Web</h3>
+                    <p>Sites modernos, landing pages de alta conversão, painéis administrativos e PWAs com performance excepcional.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚙️</div>
+                    <h3>Sistemas Sob Medida</h3>
+                    <p>Soluções para barbearias, manicures, clínicas, lojas de carros, finanças e muito mais. Feito para seu negócio.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💡</div>
+                    <h3>Consultoria Tech</h3>
+                    <p>Otimização de processos, scaling de aplicações e arquitetura de sistemas para crescer com segurança.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-tag">Portfolio</div>
+                <h2 class="section-title">Projetos <span class="gradient-text">Realizados</span></h2>
+                <p class="section-description">Conheça e teste nossos sistemas desenvolvidos - Demos interativos</p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card" data-demo="acai-dany">
+                    <div class="project-preview">
+                        <img src="./assets/images/project-previews/acai-dany.svg" alt="Açaí da Dany Preview" loading="lazy">
+                    </div>
+                    <h3>Açaí da Dany</h3>
+                    <p>Sistema de cardápio digital com integração WhatsApp. Pedidos diretos, carrinho inteligente e gestão completa de produtos.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">React</span>
+                        <span class="project-tag">TypeScript</span>
+                        <span class="project-tag">Vite</span>
+                        <span class="project-tag">WhatsApp API</span>
+                    </div>
+                    <button class="project-link demo-btn" onclick="openDemo('acai-dany')">
+                        🎯 Testar Demo →
+                    </button>
+                </div>
+                
+                <div class="project-card" data-demo="barbearia-raimundos">
+                    <div class="project-preview">
+                        <img src="./assets/images/project-previews/barbearia-raimundos.svg" alt="Barbearia Raimundos Preview" loading="lazy">
+                    </div>
+                    <h3>Barbearia Raimundos</h3>
+                    <p>Sistema de agendamento online para barbearia com gestão de horários, clientes e pagamentos integrados.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">React</span>
+                        <span class="project-tag">Supabase</span>
+                        <span class="project-tag">Tailwind</span>
+                        <span class="project-tag">PWA</span>
+                    </div>
+                    <button class="project-link demo-btn" onclick="openDemo('barbearia-raimundos')">
+                        🎯 Testar Demo →
+                    </button>
+                </div>
+                
+                <div class="project-card" data-demo="financas-pessoais">
+                    <div class="project-preview">
+                        <img src="./assets/images/project-previews/financas-pessoais.svg" alt="Finanças Pessoais Preview" loading="lazy">
+                    </div>
+                    <h3>Finanças Pessoais</h3>
+                    <p>Calculadora de empréstimos com análise de crédito, simulações e dashboard financeiro completo.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">JavaScript</span>
+                        <span class="project-tag">HTML5</span>
+                        <span class="project-tag">CSS3</span>
+                        <span class="project-tag">Chart.js</span>
+                    </div>
+                    <button class="project-link demo-btn" onclick="openDemo('financas-pessoais')">
+                        🎯 Testar Demo →
+                    </button>
+                </div>
+                
+                <div class="project-card" data-demo="whatsapp-bot-ai">
+                    <div class="project-preview">
+                        <img src="./assets/images/project-previews/whatsapp-bot-ai.svg" alt="WhatsApp Bot AI Preview" loading="lazy">
+                    </div>
+                    <h3>WhatsApp Bot AI</h3>
+                    <p>Chatbot inteligente com IA para atendimento automatizado, integração CRM e fluxos personalizados.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Node.js</span>
+                        <span class="project-tag">OpenAI</span>
+                        <span class="project-tag">WhatsApp API</span>
+                        <span class="project-tag">Express</span>
+                    </div>
+                    <button class="project-link demo-btn" onclick="openDemo('whatsapp-bot-ai')">
+                        🎯 Testar Demo →
+                    </button>
+                </div>
+                
+                <div class="project-card" data-demo="portfolio-gallery">
+                    <div class="project-preview">
+                        <img src="./assets/images/project-previews/portfolio-gallery.svg" alt="Portfolio Gallery Preview" loading="lazy">
+                    </div>
+                    <h3>Portfolio Gallery</h3>
+                    <p>Sistema completo de portfolio com galeria interativa, navegação avançada e demonstrações em tempo real.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML5</span>
+                        <span class="project-tag">CSS3</span>
+                        <span class="project-tag">JavaScript</span>
+                        <span class="project-tag">PWA</span>
+                    </div>
+                    <button class="project-link demo-btn" onclick="openDemo('portfolio-gallery')">
+                        🎯 Testar Demo →
+                    </button>
+                </div>
+            </div>
             
-            scripts.forEach((src, index) => {
-                setTimeout(() => {
-                    const script = document.createElement('script');
-                    script.src = src;
-                    script.async = true;
-                    script.defer = true;
-                    document.head.appendChild(script);
-                }, index * 100); // Stagger loading
-            });
-        });
-    </script>
+            <!-- Demo Modal -->
+            <div class="demo-modal" id="demoModal">
+                <div class="demo-container">
+                    <div class="demo-header">
+                        <h3 id="demoTitle">Demo do Projeto</h3>
+                        <div class="demo-controls">
+                            <button class="demo-control-btn" onclick="openDemoExternal()" title="Abrir em nova aba">
+                                🔗
+                            </button>
+                            <button class="demo-control-btn" onclick="toggleFullscreen()" title="Tela cheia">
+                                ⛶
+                            </button>
+                            <button class="demo-close-btn" onclick="closeDemo()">
+                                ✕
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-content">
+                        <div class="demo-loading">
+                            <div class="loading-spinner"></div>
+                            <p>Carregando demo...</p>
+                        </div>
+                        <iframe id="demoFrame" src="" frameborder="0"></iframe>
+                    </div>
+                    <div class="demo-footer">
+                        <div class="demo-info">
+                            <span class="demo-label">🎯 DEMO INTERATIVO</span>
+                            <span class="demo-description">Teste todas as funcionalidades</span>
+                        </div>
+                        <button class="btn-secondary" onclick="closeDemo()">
+                            ← Voltar ao Portfolio
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-tag">Depoimentos</div>
+                <h2 class="section-title">O que nossos <span class="gradient-text">Clientes</span> dizem</h2>
+                <p class="section-description">Resultados reais de quem confia no nosso trabalho</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <p class="testimonial-text">O sistema de agendamento revolucionou minha barbearia. Aumentamos 40% nos agendamentos no primeiro mês!</p>
+                    <div class="testimonial-author">Carlos Silva</div>
+                    <div class="testimonial-role">CEO - Barbearia Raimundos</div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">Profissionalismo excepcional. O sistema entregue superou todas as expectativas. Recomendo fortemente!</p>
+                    <div class="testimonial-author">Marina Santos</div>
+                    <div class="testimonial-role">Diretora - Clínica Estética Belle</div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">A plataforma de empréstimos que desenvolveram é simplesmente incrível. Suporte técnico impecável.</p>
+                    <div class="testimonial-author">Roberto Lima</div>
+                    <div class="testimonial-role">Fundador - FinanceiroFácil</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-tag">Preços</div>
+                <h2 class="section-title">Planos que <span class="gradient-text">Cabem</span> no seu bolso</h2>
+                <p class="section-description">Escolha o plano ideal para o seu negócio</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3 class="pricing-name">Starter</h3>
+                    <div class="pricing-price">R$ 2.990</div>
+                    <p class="pricing-description">Ideal para pequenos negócios</p>
+                    <ul class="pricing-features">
+                        <li>Landing page responsiva</li>
+                        <li>Até 5 páginas</li>
+                        <li>Formulário de contato</li>
+                        <li>SEO básico</li>
+                        <li>30 dias de suporte</li>
+                    </ul>
+                    <a href="https://wa.me/5511999999999" target="_blank" class="btn-primary">Começar Agora</a>
+                </div>
+                <div class="pricing-card popular">
+                    <h3 class="pricing-name">Pro</h3>
+                    <div class="pricing-price">R$ 7.990</div>
+                    <p class="pricing-description">Para negócios em crescimento</p>
+                    <ul class="pricing-features">
+                        <li>Sistema web completo</li>
+                        <li>Painel administrativo</li>
+                        <li>Integração WhatsApp</li>
+                        <li>Banco de dados</li>
+                        <li>90 dias de suporte</li>
+                        <li>Treinamento incluso</li>
+                    </ul>
+                    <a href="https://wa.me/5511999999999" target="_blank" class="btn-primary">Escolher Pro</a>
+                </div>
+                <div class="pricing-card">
+                    <h3 class="pricing-name">Enterprise</h3>
+                    <div class="pricing-price">Sob consulta</div>
+                    <p class="pricing-description">Soluções personalizadas</p>
+                    <ul class="pricing-features">
+                        <li>Sistema sob medida</li>
+                        <li>Automações com IA</li>
+                        <li>Integrações ilimitadas</li>
+                        <li>Infraestrutura dedicada</li>
+                        <li>Suporte prioritário 24/7</li>
+                        <li>Consultoria mensal</li>
+                    </ul>
+                    <a href="https://wa.me/5511999999999" target="_blank" class="btn-primary">Falar com Especialista</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="cta-section">
+        <div class="cta-content">
+            <h2>Pronto para <span class="gradient-text">Transformar</span> seu negócio?</h2>
+            <p>Entre em contato conosco e descubra como podemos impulsionar seus resultados</p>
+            
+            <form class="contact-form" onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <input type="text" placeholder="Seu nome completo" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Seu melhor e-mail" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" placeholder="Seu telefone">
+                </div>
+                <div class="form-group">
+                    <textarea rows="4" placeholder="Conte-nos sobre seu projeto..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary">
+                    Solicitar Proposta Gratuita
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>TTECH</h3>
+                <p>Transformando negócios com tecnologia de ponta. Soluções completas do 0 ao 100%.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Serviços</h3>
+                <p><a href="#services">Automações com IA</a></p>
+                <p><a href="#services">Desenvolvimento Web</a></p>
+                <p><a href="#services">Sistemas Sob Medida</a></p>
+                <p><a href="#services">Consultoria Tech</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Contato</h3>
+                <p>contato@ttech.dev</p>
+                <p>WhatsApp: (11) 99999-9999</p>
+                <p><a href="https://instagram.com/ttech" target="_blank">Instagram</a></p>
+                <p><a href="https://linkedin.com/company/ttech" target="_blank">LinkedIn</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 TTECH Desenvolvimento. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/5511999999999" target="_blank" class="whatsapp-float">
+        <svg viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+        </svg>
+    </a>
+
+    <!-- Scripts -->
+    <script src="./demos/landpage-divulga/script.js"></script>
     
-    <!-- Service Worker Registration for Caching -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(function(registration) {
-                        console.log('ServiceWorker registration successful');
-                    })
-                    .catch(function(err) {
-                        console.log('ServiceWorker registration failed');
-                    });
-            });
-        }
-    </script>
-    
-    <!-- Performance Monitoring -->
-    <script>
-        window.addEventListener('load', function() {
-            const loadTime = performance.now() - window.performanceStart;
-            const indicator = document.getElementById('performance-indicator');
-            
-            if (loadTime < 3000) {
-                indicator.textContent = `Carregado em ${Math.round(loadTime)}ms ✓`;
-                indicator.className = 'performance-indicator success visible';
-            } else if (loadTime < 5000) {
-                indicator.textContent = `Carregado em ${Math.round(loadTime)}ms ⚠`;
-                indicator.className = 'performance-indicator warning visible';
-            } else {
-                indicator.textContent = `Carregado em ${Math.round(loadTime)}ms ✗`;
-                indicator.className = 'performance-indicator error visible';
-            }
-            
-            setTimeout(() => {
-                indicator.classList.remove('visible');
-            }, 3000);
-            
-            // Track Core Web Vitals
-            if ('PerformanceObserver' in window) {
-                try {
-                    const observer = new PerformanceObserver((list) => {
-                        for (const entry of list.getEntries()) {
-                            if (entry.entryType === 'largest-contentful-paint') {
-                                console.log('LCP:', entry.startTime);
-                            }
-                            if (entry.entryType === 'first-input') {
-                                console.log('FID:', entry.processingStart - entry.startTime);
-                            }
-                        }
-                    });
-                    
-                    observer.observe({ entryTypes: ['largest-contentful-paint', 'first-input'] });
-                } catch (e) {
-                    console.log('Performance Observer not fully supported');
-                }
-            }
-        });
-    </script>
+    <!-- State Reset System -->
+    <script src="./state-reset-system.js"></script>
 </body>
 </html>
