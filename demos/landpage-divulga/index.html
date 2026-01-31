@@ -109,41 +109,111 @@
             <div class="section-header">
                 <div class="section-tag">Portfolio</div>
                 <h2 class="section-title">Projetos <span class="gradient-text">Realizados</span></h2>
-                <p class="section-description">Conheça alguns dos sistemas que desenvolvemos</p>
+                <p class="section-description">Conheça e teste nossos sistemas desenvolvidos - Demos interativos</p>
             </div>
             <div class="projects-grid">
-                <div class="project-card">
-                    <h3>Plataforma de Empréstimos</h3>
-                    <p>Sistema completo de gestão de empréstimos com análise de crédito, dashboard administrativo e integração bancária.</p>
+                <div class="project-card" data-demo="acai-dany">
+                    <div class="project-preview">
+                        <img src="../../assets/images/project-previews/acai-dany.svg" alt="Açaí da Dany Preview" loading="lazy">
+                    </div>
+                    <h3>Açaí da Dany</h3>
+                    <p>Sistema de cardápio digital com integração WhatsApp. Pedidos diretos, carrinho inteligente e gestão completa de produtos.</p>
                     <div class="project-tags">
                         <span class="project-tag">React</span>
-                        <span class="project-tag">Node.js</span>
-                        <span class="project-tag">PostgreSQL</span>
-                        <span class="project-tag">Stripe</span>
+                        <span class="project-tag">TypeScript</span>
+                        <span class="project-tag">Vite</span>
+                        <span class="project-tag">WhatsApp API</span>
                     </div>
-                    <a href="https://novoemprestimo.netlify.app/auth" target="_blank" class="project-link">Ver Projeto →</a>
+                    <button class="project-link demo-btn" onclick="openDemo('acai-dany')">
+                        🎯 Testar Demo →
+                    </button>
                 </div>
-                <div class="project-card">
+                
+                <div class="project-card" data-demo="barbearia-raimundos">
+                    <div class="project-preview">
+                        <img src="../../assets/images/project-previews/barbearia-raimundos.svg" alt="Barbearia Raimundos Preview" loading="lazy">
+                    </div>
                     <h3>Barbearia Raimundos</h3>
                     <p>Sistema de agendamento online para barbearia com gestão de horários, clientes e pagamentos integrados.</p>
                     <div class="project-tags">
-                        <span class="project-tag">Next.js</span>
+                        <span class="project-tag">React</span>
                         <span class="project-tag">Supabase</span>
                         <span class="project-tag">Tailwind</span>
-                        <span class="project-tag">WhatsApp API</span>
+                        <span class="project-tag">PWA</span>
                     </div>
-                    <a href="https://barbeariaraimundos.vercel.app/" target="_blank" class="project-link">Ver Projeto →</a>
+                    <button class="project-link demo-btn" onclick="openDemo('barbearia-raimundos')">
+                        🎯 Testar Demo →
+                    </button>
                 </div>
-                <div class="project-card">
-                    <h3>Painel Financeiro PRO</h3>
-                    <p>Dashboard completo para controle financeiro empresarial com relatórios, gráficos e projeções inteligentes.</p>
+                
+                <div class="project-card" data-demo="financas-pessoais">
+                    <div class="project-preview">
+                        <img src="../../assets/images/project-previews/financas-pessoais.svg" alt="Finanças Pessoais Preview" loading="lazy">
+                    </div>
+                    <h3>Finanças Pessoais</h3>
+                    <p>Calculadora de empréstimos com análise de crédito, simulações e dashboard financeiro completo.</p>
                     <div class="project-tags">
-                        <span class="project-tag">Vue.js</span>
-                        <span class="project-tag">Python</span>
-                        <span class="project-tag">FastAPI</span>
+                        <span class="project-tag">JavaScript</span>
+                        <span class="project-tag">HTML5</span>
+                        <span class="project-tag">CSS3</span>
                         <span class="project-tag">Chart.js</span>
                     </div>
-                    <a href="#" class="project-link">Em Desenvolvimento →</a>
+                    <button class="project-link demo-btn" onclick="openDemo('financas-pessoais')">
+                        🎯 Testar Demo →
+                    </button>
+                </div>
+                
+                <div class="project-card" data-demo="whatsapp-bot-ai">
+                    <div class="project-preview">
+                        <img src="../../assets/images/project-previews/whatsapp-bot-ai.svg" alt="WhatsApp Bot AI Preview" loading="lazy">
+                    </div>
+                    <h3>WhatsApp Bot AI</h3>
+                    <p>Chatbot inteligente com IA para atendimento automatizado, integração CRM e fluxos personalizados.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Node.js</span>
+                        <span class="project-tag">OpenAI</span>
+                        <span class="project-tag">WhatsApp API</span>
+                        <span class="project-tag">Express</span>
+                    </div>
+                    <button class="project-link demo-btn" onclick="openDemo('whatsapp-bot-ai')">
+                        🎯 Testar Demo →
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Demo Modal -->
+            <div class="demo-modal" id="demoModal">
+                <div class="demo-container">
+                    <div class="demo-header">
+                        <h3 id="demoTitle">Demo do Projeto</h3>
+                        <div class="demo-controls">
+                            <button class="demo-control-btn" onclick="openDemoExternal()" title="Abrir em nova aba">
+                                🔗
+                            </button>
+                            <button class="demo-control-btn" onclick="toggleFullscreen()" title="Tela cheia">
+                                ⛶
+                            </button>
+                            <button class="demo-close-btn" onclick="closeDemo()">
+                                ✕
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-content">
+                        <div class="demo-loading">
+                            <div class="loading-spinner"></div>
+                            <p>Carregando demo...</p>
+                        </div>
+                        <iframe id="demoFrame" src="" frameborder="0"></iframe>
+                    </div>
+                    <div class="demo-footer">
+                        <div class="demo-info">
+                            <span class="demo-label">🎯 DEMO INTERATIVO</span>
+                            <span class="demo-description">Teste todas as funcionalidades</span>
+                        </div>
+                        <button class="btn-secondary" onclick="closeDemo()">
+                            ← Voltar ao Portfolio
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
